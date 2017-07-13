@@ -1,0 +1,81 @@
+@import 'queries';
+@import 'variables';
+@import 'fonts';
+// @import 'iconfont';
+@import 'mixins';
+@import 'utils';
+@import 'forms';
+@import 'components/components';
+
+// :)
+* {
+  box-sizing: border-box;
+}
+
+// Text Selection Colour
+::selection {
+  background: $selection; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: $selection; /* Gecko Browsers */
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+
+  color: $text-dark;
+  background-color: $background-colour;
+  /* Better Font Rendering =========== */
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+}
+
+a,
+a:visited {
+  color: $text-dark;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: .250s ease-in-out;
+
+  @include smart-underline($background-colour, $text-dark, $selection);
+  &:hover {
+    opacity: .5;
+  }
+}
+
+a.none {
+  background: none;
+  text-shadow: none;
+
+  text-decoration: none;
+}
+
+ul.none {
+  padding-left: 0;
+
+  list-style-type: none;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+
+  justify-content: space-between;
+}
