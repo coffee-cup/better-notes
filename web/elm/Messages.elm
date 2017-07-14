@@ -16,5 +16,4 @@ type Msg
     | ReceiveChatMessage JE.Value
     | ShowHome
     | ShowAbout
-    | Increase Int
-    | Decrease Int
+    | Login

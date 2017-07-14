@@ -96,11 +96,8 @@ update msg model =
         ShowAbout ->
             ( model, changePage AboutRoute )
 
-        Increase amount ->
-            ( { model | counter = model.counter + amount }, Cmd.none )
-
-        Decrease amount ->
-            ( { model | counter = model.counter - amount }, Cmd.none )
+        Login ->
+            ( model, Cmd.none )
 
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )

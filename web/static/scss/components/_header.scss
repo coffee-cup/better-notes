@@ -1,3 +1,15 @@
 .header {
-  border-bottom: solid 2px $primary-colour;
+  border-bottom: solid 4px $primary-colour;
+}
+
+.f-huge {
+  font-size: 8rem;
+
+  @include break(medium) {
+    font-size: 6rem;
+  }
+
+  @include break(small) {
+    font-size: 4rem;
+  }
 }

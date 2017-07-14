@@ -39,19 +39,17 @@ header : Model -> Html Msg
 header model =
     div [ class "header bold" ]
         [ div []
-            [ headingLarge "Hello."
-            , counter model.counter
-            , apiText model
+            [ headingHuge "Better Notes"
             ]
         ]
 
 
-counter : Int -> Html Msg
-counter counter =
-    div [ class "counter f1" ]
-        [ span [ onClick (Decrease 1), class "pointer" ] [ text "-" ]
-        , span [ class "ph4" ] [ text (toString counter) ]
-        , span [ onClick (Increase 1), class "pointer" ] [ text "+" ]
+login : Html Msg
+login =
+    div [ class "login" ]
+        [ button [ onClick Login, class "button mv4" ]
+            [ text "Login with Google"
+            ]
         ]
 
 
@@ -78,14 +76,16 @@ footer =
 
 
 
--- Sample Routes
+-- Routes
 
 
 homeView : Model -> Html Msg
 homeView model =
-    div [ class "home flex sb col full" ]
+    div [ class "home col full" ]
         [ header model
-        , Html.map ChatMsg (Chat.View.view model.chatModel)
+        , login
+
+        --, Html.map ChatMsg (Chat.View.view model.chatModel)
         ]
 
 

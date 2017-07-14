@@ -9,24 +9,10 @@ button {
 }
 
 button {
-  color: $text-light;
-  background-color: $accent-colour;
-
-  font-size: .9rem;
-  font-weight: bold;
-
   border: none;
-  border-radius: $bradius;
   outline: none;
 
   cursor: pointer;
-  transition: transform .250s ease-out;
-  &:hover {
-    transform: scale(1.05);
-  }
-  &:active {
-    transform: scale(1.02);
-  }
 }
 
 input {

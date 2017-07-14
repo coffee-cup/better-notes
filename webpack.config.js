@@ -5,7 +5,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
-require('dotenv').config();
+require('dotenv').config({
+  path: './.env.client'
+});
 
 const isProd = process.env.NODE_ENV === 'production';
 console.log(
@@ -109,9 +111,7 @@ const config = {
         noParse: [/\.elm$/]
       }
     }),
-    new webpack.EnvironmentPlugin([
-      'WEBSOCKET_URL'
-    ])
+    new webpack.EnvironmentPlugin(['WEBSOCKET_URL'])
   ]
 };
 

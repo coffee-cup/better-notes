@@ -9,8 +9,7 @@ import Chat.Models
 
 
 type alias Model =
-    { counter : Int
-    , text : String
+    { text : String
     , username : String
     , chatModel : Chat.Models.Model
     , phxSocket : Phoenix.Socket.Socket Msg
@@ -20,8 +19,7 @@ type alias Model =
 
 initialModel : Flags -> Sitemap -> Model
 initialModel flags sitemap =
-    { counter = 0
-    , text = ""
+    { text = ""
     , username = ""
     , chatModel = Chat.Models.initialModel
     , phxSocket = initPhxSocket flags
