@@ -19,7 +19,7 @@ defmodule BetterNotes.Mixfile do
   def application do
     [mod: {BetterNotes, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ueberauth, :ueberauth_google]]
+                    :phoenix_ecto, :postgrex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,10 +38,9 @@ defmodule BetterNotes.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:ueberauth, "~> 0.4"},
-     {:ueberauth_google, "~> 0.5"},
      {:ja_serializer, "~> 0.12.0"},
-     {:guardian, "~> 0.14.2"}]
+     {:guardian, "~> 0.14.2"},
+     {:comeonin, "~> 3.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

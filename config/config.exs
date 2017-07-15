@@ -22,21 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :ueberauth, Ueberauth,
-  base_path: "/api/v1/auth",
-  providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]},
-    identity: {Ueberauth.Strategy.Identity, [
-      callback_methods: ["POST"],
-      uid_field: :username,
-      nickname_field: :username
-    ]}
-  ]
-
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
-
 # Guardian configuration
 config :guardian, Guardian,
   allowed_algos: ["HS512"], # optional

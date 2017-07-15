@@ -7,6 +7,7 @@ import Route exposing (..)
 type Sitemap
     = HomeRoute
     | AboutRoute
+    | AuthRoute
     | NotFoundRoute
 
 
@@ -20,9 +21,14 @@ aboutR =
     AboutRoute := static "about"
 
 
+authR : Route.Route Sitemap
+authR =
+    AuthRoute := static "auth/google/callback"
+
+
 sitemap : Route.Router Sitemap
 sitemap =
-    router [ homeR, aboutR ]
+    router [ homeR, aboutR, authR ]
 
 
 removeTrailingSlash : String -> String
@@ -49,6 +55,9 @@ toString r =
 
         AboutRoute ->
             reverse aboutR []
+
+        AuthRoute ->
+            reverse authR []
 
         NotFoundRoute ->
             "/404"

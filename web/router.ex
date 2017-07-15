@@ -10,8 +10,8 @@ defmodule BetterNotes.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json", "json-api"]
-    plug JaSerializer.Deserializer
+    plug :accepts, ["json"]
+    # plug JaSerializer.Deserializer
   end
 
   pipeline :api_auth do
@@ -22,21 +22,11 @@ defmodule BetterNotes.Router do
   end
 
   scope "/api/v1", BetterNotes do
-    pipe_through :api_auth
+    pipe_through :api
 
     get "/", ApiController, :index
 
-    resources "/users", UserController, except: [:new, :edit]
-    get "/user/current", UserController, :current, as: :current_user
-    delete "/logout", AuthController, :delete
-  end
-
-  scope "/api/v1/auth", BetterNotes do
-    pipe_through :api
-
-    get "/:provider", AuthController, :request
-    get "/:provider/callback", AuthController, :callback
-    post "/:provider/callback", AuthController, :callback
+    resources "/users", UserController, only: [:show, :create]
   end
 
   scope "/", BetterNotes do

@@ -1,6 +1,14 @@
 defmodule BetterNotes.UserView do
   use BetterNotes.Web, :view
-  use JaSerializer.PhoenixView
+  # use JaSerializer.PhoenixView
 
-  attributes [:avatar, :email, :first_name, :last_name, :auth_provider]
+  # attributes [:email]
+
+  def render("show.json", %{user: %{email: email}}) do
+    %{email: email}
+  end
+
+  def render("create.json", %{user: %{email: email}}) do
+    %{email: email}
+  end
 end

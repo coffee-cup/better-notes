@@ -3,18 +3,19 @@ defmodule BetterNotes.UserController do
 
   alias BetterNotes.User
 
-    plug Guardian.Plug.EnsureAuthenticated, handler: BetterNotes.AuthController
+  def show(conn, %{"id" => id} = params) do
+    IO.inspect params
+    user = Repo.get!(User, id)
+    render(conn, "show.json", user: user)
+  end
 
-    def index(conn, _params) do
-      users = Repo.all(User)
-      render(conn, "index.json-api", data: users)
-    end
+  def create(conn, params) do
+    IO.inspect params
+    changeset = User.changeset(%User{}, params)
+    user = Repo.insert!(changeset)
 
-    def current(conn, _params) do
-      user = conn
-      |> Guardian.Plug.current_resource
+    IO.inspect user
 
-      conn
-      |> render(BetterNotes.UserView, "show.json-api", data: user)
-    end
+    render(conn, "show.json", user: user)
+  end
 end

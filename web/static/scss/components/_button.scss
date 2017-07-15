@@ -1,6 +1,11 @@
 .button {
+  display: inline-block;
+
+  padding: .5rem;
+
   color: $text-light;
-  background-color: $primary-colour;
+  background: $primary-colour;
+  text-shadow: none;
 
   font-size: .9rem;
   font-weight: bold;
@@ -13,6 +18,7 @@
   transition: transform .250s ease-out;
   &:hover {
     transform: scale(1.05);
+    opacity: 1;
   }
   &:active {
     transform: scale(1.02);

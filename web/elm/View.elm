@@ -7,7 +7,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (Sitemap(..))
 import ViewUtils exposing (..)
-import Chat.View
+import Auth.View
 
 
 view : Model -> Html Msg
@@ -28,6 +28,9 @@ page model =
         HomeRoute ->
             homeView model
 
+        AuthRoute ->
+            Auth.View.view model
+
         AboutRoute ->
             aboutView model
 
@@ -47,9 +50,8 @@ header model =
 login : Html Msg
 login =
     div [ class "login" ]
-        [ button [ onClick Login, class "button mv4" ]
-            [ text "Login with Google"
-            ]
+        [ a [ href "/api/v1/auth/google", class "button mv2" ]
+            [ text "Login with Google" ]
         ]
 
 
