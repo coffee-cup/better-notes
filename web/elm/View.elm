@@ -14,6 +14,7 @@ view : Model -> Html Msg
 view model =
     div [ class "ph6-ns ph4-m ph3" ]
         [ div [] [ page model ]
+        , h1 [ class "f1" ] [ text model.error ]
         , footer
         ]
 
@@ -47,14 +48,6 @@ header model =
         ]
 
 
-login : Html Msg
-login =
-    div [ class "login" ]
-        [ a [ href "/api/v1/auth/google", class "button mv2" ]
-            [ text "Login with Google" ]
-        ]
-
-
 apiText : Model -> Html Msg
 apiText model =
     div []
@@ -85,7 +78,7 @@ homeView : Model -> Html Msg
 homeView model =
     div [ class "home col full" ]
         [ header model
-        , login
+        , Auth.View.viewLogin model
 
         --, Html.map ChatMsg (Chat.View.view model.chatModel)
         ]

@@ -16,4 +16,4 @@ type Msg
     | ReceiveChatMessage JE.Value
     | ShowHome
     | ShowAbout
-    | Login
+    | OnFetchLogin (Result Http.Error String)

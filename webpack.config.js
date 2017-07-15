@@ -111,7 +111,7 @@ const config = {
         noParse: [/\.elm$/]
       }
     }),
-    new webpack.EnvironmentPlugin(['WEBSOCKET_URL'])
+    new webpack.EnvironmentPlugin(['WEBSOCKET_URL', 'GOOGLE_CLIENT_ID'])
   ]
 };
 

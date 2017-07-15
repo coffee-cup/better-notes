@@ -96,7 +96,10 @@ update msg model =
         ShowAbout ->
             ( model, changePage AboutRoute )
 
-        Login ->
+        OnFetchLogin (Ok email) ->
+            ( { model | error = email }, Cmd.none )
+
+        OnFetchLogin (Err _) ->
             ( model, Cmd.none )
 
 
