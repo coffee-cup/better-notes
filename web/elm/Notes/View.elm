@@ -22,6 +22,7 @@ viewUser maybeUser =
         Just user ->
             div [ class "user" ]
                 [ img [ src user.avatar ] []
+                , p [] [ text (toString user.id) ]
                 , p [] [ text (user.firstName ++ " " ++ user.lastName) ]
                 , p [] [ text user.email ]
                 ]
