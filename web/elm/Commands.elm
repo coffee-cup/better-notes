@@ -25,4 +25,4 @@ decodeTextUrl =
 
 decodeUser : Decode.Decoder String
 decodeUser =
-    field "email" Decode.string
+    field "access_token" Decode.string

@@ -6,11 +6,16 @@ import Phoenix.Push
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
+import Api exposing (getCurrentUser)
 import Chat.Messages
 import Chat.Update
+import Debug
 
 
 port pageView : String -> Cmd msg
+
+
+port saveToken : String -> Cmd msg
 
 
 changePage : Sitemap -> Cmd msg
@@ -96,11 +101,23 @@ update msg model =
         ShowAbout ->
             ( model, changePage AboutRoute )
 
-        OnFetchLogin (Ok email) ->
-            ( { model | error = email }, Cmd.none )
+        OnFetchLogin (Ok token) ->
+            ( { model | token = token }
+            , Cmd.batch
+                [ saveToken token
+                , changePage NotesRoute
+                , getCurrentUser token
+                ]
+            )
 
         OnFetchLogin (Err _) ->
-            ( model, Cmd.none )
+            ( { model | error = "Error logging in" }, changePage HomeRoute )
+
+        OnFetchUser (Ok user) ->
+            ( { model | user = Just user }, Cmd.none )
+
+        OnFetchUser (Err _) ->
+            ( { model | error = "Error fetching user" }, changePage HomeRoute )
 
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )

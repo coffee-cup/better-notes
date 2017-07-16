@@ -8,19 +8,16 @@ import Models exposing (Model)
 import Routing exposing (Sitemap(..))
 import ViewUtils exposing (..)
 import Auth.View
+import Notes.View
 
 
 view : Model -> Html Msg
 view model =
     div [ class "ph6-ns ph4-m ph3" ]
         [ div [] [ page model ]
-        , h1 [ class "f1" ] [ text model.error ]
+        , p [ class "f2 error" ] [ text model.error ]
         , footer
         ]
-
-
-
--- Router
 
 
 page : Model -> Html Msg
@@ -31,6 +28,9 @@ page model =
 
         AuthRoute ->
             Auth.View.view model
+
+        NotesRoute ->
+            Notes.View.view model
 
         AboutRoute ->
             aboutView model

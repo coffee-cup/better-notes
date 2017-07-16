@@ -5,6 +5,7 @@ import Navigation exposing (Location)
 import Json.Encode as JE
 import Http
 import Chat.Messages
+import Types exposing (User)
 
 
 type Msg
@@ -17,3 +18,4 @@ type Msg
     | ShowHome
     | ShowAbout
     | OnFetchLogin (Result Http.Error String)
+    | OnFetchUser (Result Http.Error User)
