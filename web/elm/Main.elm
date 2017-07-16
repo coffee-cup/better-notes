@@ -5,11 +5,10 @@ import Flags exposing (Flags)
 import Models exposing (Model, initialModel)
 import Messages exposing (Msg(..))
 import Subscriptions exposing (subscriptions)
-import Commands exposing (getText, loginFromCode)
+import Commands exposing (getText, getLoginCommand, getUserCommand)
 import View exposing (view)
 import Update exposing (update, pageView)
-import Routing
-import Auth
+import Routing exposing (Sitemap(..))
 
 
 -- Init
@@ -24,8 +23,11 @@ init flags location =
         loginCommand =
             getLoginCommand location
 
+        userCommand =
+            getUserCommand location flags
+
         commands =
-            loginCommand :: [ getText ]
+            loginCommand :: userCommand :: [ getText ]
     in
         ( initialModel flags currentRoute
         , Cmd.batch commands
@@ -44,13 +46,3 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
-
-
-getLoginCommand : Location -> Cmd Msg
-getLoginCommand loc =
-    case Auth.parseCodeFromQuery loc of
-        Just code ->
-            loginFromCode code
-
-        Nothing ->
-            Cmd.none

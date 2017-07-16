@@ -1,4 +1,4 @@
-module Api exposing (getCurrentUser, apiUrl)
+module Api exposing (getCurrentUser, loginFromCode, apiUrl)
 
 import Http
 import Json.Decode as Decode exposing (..)
@@ -19,6 +19,12 @@ getCurrentUser token =
             getRequest token "/users/current" decodeUser
     in
         request |> Http.send OnFetchUser
+
+
+loginFromCode : String -> Cmd Msg
+loginFromCode code =
+    Http.get (apiUrl "/auth/google/callback?code=" ++ code) decodeToken
+        |> Http.send OnFetchLogin
 
 
 apiUrl : String -> String
@@ -72,3 +78,8 @@ decodeUser =
         |: (field "last_name" string)
         |: (field "avatar" string)
         |: (field "email" string)
+
+
+decodeToken : Decode.Decoder String
+decodeToken =
+    field "access_token" Decode.string

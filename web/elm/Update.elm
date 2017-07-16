@@ -9,7 +9,6 @@ import Routing exposing (parseLocation, navigateTo, Sitemap(..))
 import Api exposing (getCurrentUser)
 import Chat.Messages
 import Chat.Update
-import Debug
 
 
 port pageView : String -> Cmd msg
