@@ -12,6 +12,8 @@ defmodule BetterNotes.GuardianSerializer do
   end
 
   def from_token("User:" <> id) do
+    IO.puts "\n\n\n\n--------"
+    IO.inspect id
     {:ok, Repo.get(User, id)}
   end
   def from_token(_) do

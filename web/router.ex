@@ -11,21 +11,21 @@ defmodule BetterNotes.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    # plug JaSerializer.Deserializer
   end
 
   pipeline :api_auth do
-    plug :accepts, ["json", "json-api"]
+    plug :accepts, ["json"]
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
     plug Guardian.Plug.LoadResource
   end
 
   scope "/api/v1", BetterNotes do
-    pipe_through :api
+    pipe_through :api_auth
 
     get "/", ApiController, :index
 
-    resources "/users", UserController, only: [:show, :create]
+    get "/users", UserController, :index
+    get "/users/current", UserController, :show
   end
 
   scope "/api/v1/auth", BetterNotes do

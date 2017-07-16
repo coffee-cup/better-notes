@@ -1,30 +1,24 @@
 defmodule BetterNotes.ErrorView do
   use BetterNotes.Web, :view
-  use JaSerializer.PhoenixView
 
   def render("401.json", _assigns) do
     %{title: "Unauthorized", code: 401}
-    |> JaSerializer.ErrorSerializer.format
   end
 
   def render("403.json", _assigns) do
     %{title: "Forbidden", code: 403}
-    |> JaSerializer.ErrorSerializer.format
   end
 
   def render("404.json", _assigns) do
     %{title: "Page not found", code: 404}
-    |> JaSerializer.ErrorSerializer.format
   end
 
   def render("422.json", _assigns) do
     %{title: "Unprocessable entity", code: 422}
-    |> JaSerializer.ErrorSerializer.format
   end
 
   def render("500.json", _assigns) do
     %{title: "Internal Server Error", code: 500}
-    |> JaSerializer.ErrorSerializer.format
   end
 
   # In case no render clause matches or no

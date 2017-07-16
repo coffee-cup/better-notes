@@ -78,7 +78,10 @@ defmodule BetterNotes.AuthController do
     end
   end
 
-  def unauthenticated(conn, _params) do
+  def unauthenticated(conn, params) do
+    IO.inspect params
+    IO.inspect conn
+
     conn
     |> put_status(401)
     |> render(ErrorView, "401.json")
