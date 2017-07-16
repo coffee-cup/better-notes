@@ -4,4 +4,8 @@ defmodule BetterNotes.ApiView do
   def render("index.json", %{data: data}) do
     data
   end
+
+  def render("auth.json", %{user: user}) do
+    user
+  end
 end

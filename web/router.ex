@@ -18,7 +18,6 @@ defmodule BetterNotes.Router do
     plug :accepts, ["json", "json-api"]
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
     plug Guardian.Plug.LoadResource
-    plug JaSerializer.Deserializer
   end
 
   scope "/api/v1", BetterNotes do
@@ -27,6 +26,13 @@ defmodule BetterNotes.Router do
     get "/", ApiController, :index
 
     resources "/users", UserController, only: [:show, :create]
+  end
+
+  scope "/api/v1/auth", BetterNotes do
+    pipe_through :api
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   scope "/", BetterNotes do

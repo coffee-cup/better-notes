@@ -1,8 +1,6 @@
 module Main exposing (..)
 
-import Task
 import Navigation exposing (Location)
-import Debug
 import Flags exposing (Flags)
 import Models exposing (Model, initialModel)
 import Messages exposing (Msg(..))

@@ -3,41 +3,12 @@ module Auth exposing (..)
 import Http
 import Navigation
 import Dict
+import Api exposing (apiUrl)
 
 
-type alias Client =
-    { authorizeUrl : String
-    , redirectUri : String
-    , responseType : String
-    , scope : String
-    , accessType : String
-    , provider : String
-    , clientId : String
-    }
-
-
-googleClient : String -> Client
-googleClient clientId =
-    { authorizeUrl = "https://accounts.google.com/o/oauth2/v2/auth"
-    , redirectUri = "http://localhost:4000/auth/google/callback"
-    , responseType = "code"
-    , scope = "profile"
-    , accessType = "offline"
-    , provider = "google"
-    , clientId = clientId
-    }
-
-
-buildAuthUrl : Client -> String
-buildAuthUrl client =
-    url
-        client.authorizeUrl
-        [ ( "response_type", client.responseType )
-        , ( "redirect_uri", client.redirectUri )
-        , ( "client_id", client.clientId )
-        , ( "scope", client.scope )
-        , ( "access_type", client.accessType )
-        ]
+googleAuthUrl : String
+googleAuthUrl =
+    apiUrl "/auth/google"
 
 
 parseCodeFromQuery : Navigation.Location -> Maybe String

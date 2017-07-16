@@ -19,7 +19,7 @@ defmodule BetterNotes.Mixfile do
   def application do
     [mod: {BetterNotes, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :ueberauth, :ueberauth_google]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,8 @@ defmodule BetterNotes.Mixfile do
      {:cowboy, "~> 1.0"},
      {:ja_serializer, "~> 0.12.0"},
      {:guardian, "~> 0.14.2"},
+     {:ueberauth, "~> 0.4"},
+     {:ueberauth_google, "~> 0.5"},
      {:comeonin, "~> 3.2"}]
   end
 

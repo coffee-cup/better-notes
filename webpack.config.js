@@ -9,6 +9,9 @@ require('dotenv').config({
   path: './.env.client'
 });
 
+// These environment variables are sent to the client
+const envVars = ['WEBSOCKET_URL'];
+
 const isProd = process.env.NODE_ENV === 'production';
 console.log(
   isProd ? 'Building for Production ⚡️' : 'Building for Development 💃'
@@ -111,7 +114,7 @@ const config = {
         noParse: [/\.elm$/]
       }
     }),
-    new webpack.EnvironmentPlugin(['WEBSOCKET_URL', 'GOOGLE_CLIENT_ID'])
+    new webpack.EnvironmentPlugin(envVars)
   ]
 };
 

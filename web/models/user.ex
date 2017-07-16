@@ -3,8 +3,10 @@ defmodule BetterNotes.User do
 
   schema "users" do
     field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
+    field :auth_provider, :string
+    field :first_name, :string
+    field :last_name, :string
+    field :avatar, :string
 
     timestamps()
   end
@@ -14,8 +16,8 @@ defmodule BetterNotes.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password_hash])
-    |> validate_required([:email, :password_hash])
+    |> cast(params, [:email, :auth_provider, :first_name, :last_name, :avatar])
+    |> validate_required([:email, :auth_provider, :first_name, :last_name, :avatar])
     |> unique_constraint(:email)
   end
 end

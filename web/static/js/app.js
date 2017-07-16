@@ -15,6 +15,5 @@ const elmDiv = document.getElementById('elm-main');
 
 Elm.Main.embed(elmDiv, {
   prod: process.env.NODE_ENV === 'production',
-  websocketUrl: process.env.WEBSOCKET_URL,
-  googleClientId: process.env.GOOGLE_CLIENT_ID
+  websocketUrl: process.env.WEBSOCKET_URL
 });
