@@ -1,6 +1,6 @@
 module Notes.Models exposing (..)
 
-import User exposing (User)
+import Types.User exposing (User)
 
 
 type alias Model =

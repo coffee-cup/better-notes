@@ -8,6 +8,7 @@ defmodule BetterNotes.User do
     field :last_name, :string
     field :avatar, :string
 
+    has_many :projects, BetterNotes.Project
     timestamps()
   end
 

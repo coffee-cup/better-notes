@@ -4,9 +4,10 @@ import Phoenix.Socket
 import Navigation exposing (Location)
 import Json.Encode as JE
 import Http
+import Types.User exposing (User)
 import Chat.Messages
 import Notes.Messages
-import User exposing (User)
+import Sidebar.Messages
 
 
 type Msg
@@ -14,6 +15,7 @@ type Msg
     | OnFetchText (Result Http.Error String)
     | ChatMsg Chat.Messages.Msg
     | NotesMsg Notes.Messages.Msg
+    | SidebarMsg Sidebar.Messages.Msg
     | JoinChannel
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveChatMessage JE.Value

@@ -5,7 +5,7 @@ import Phoenix.Socket exposing (Socket)
 import Flags exposing (Flags)
 import Sockets exposing (initPhxSocket)
 import Messages exposing (Msg(..))
-import User exposing (User)
+import Types.User exposing (User)
 import Chat.Models
 import Notes.Models
 import Sidebar.Models

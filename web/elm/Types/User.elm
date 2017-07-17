@@ -1,4 +1,4 @@
-module User exposing (..)
+module Types.User exposing (..)
 
 import Json.Decode as Decode exposing (..)
 import Json.Decode.Extra as Decode exposing (..)

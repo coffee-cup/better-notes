@@ -4,5 +4,17 @@
 
   color: $text-light;
   background-color: $darkgray;
+
+  .create-project {
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }
 

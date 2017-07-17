@@ -42,11 +42,6 @@ defmodule BetterNotes.AuthController do
         jwt = Guardian.Plug.current_token(auth_conn)
         {:ok, claims} = Guardian.Plug.claims(auth_conn)
 
-        IO.puts "\n\n\n----"
-        IO.inspect Guardian.Plug.current_resource(auth_conn)
-
-        IO.inspect jwt
-
         auth_conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> json(%{access_token: jwt}) # Return token to client
@@ -78,10 +73,7 @@ defmodule BetterNotes.AuthController do
     end
   end
 
-  def unauthenticated(conn, params) do
-    IO.inspect params
-    IO.inspect conn
-
+  def unauthenticated(conn, _params) do
     conn
     |> put_status(401)
     |> render(ErrorView, "401.json")

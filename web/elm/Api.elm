@@ -3,7 +3,7 @@ module Api exposing (getCurrentUser, loginFromCode, apiUrl)
 import Http
 import Json.Decode as Decode exposing (..)
 import Messages exposing (Msg(..))
-import User exposing (User, decodeUser)
+import Types.User exposing (User, decodeUser)
 
 
 type Method
@@ -15,7 +15,7 @@ getCurrentUser : String -> Cmd Msg
 getCurrentUser token =
     let
         request =
-            getRequest token "/users/current" decodeUser
+            getRequest token "/users" decodeUser
     in
         request |> Http.send OnFetchUser
 

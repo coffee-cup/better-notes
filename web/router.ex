@@ -1,6 +1,8 @@
 defmodule BetterNotes.Router do
   use BetterNotes.Web, :router
 
+  import BetterNotes.UserPlug
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -16,7 +18,10 @@ defmodule BetterNotes.Router do
   pipeline :api_auth do
     plug :accepts, ["json"]
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.EnsureAuthenticated, handler: BetterNotes.AuthController
     plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureResource, handler: BetterNotes.AuthController
+    plug :load_user
   end
 
   # Authenticated routes
@@ -25,8 +30,8 @@ defmodule BetterNotes.Router do
 
     get "/", ApiController, :index
 
-    get "/users", UserController, :index
-    get "/users/current", UserController, :show
+    get "/users", UserController, :show
+    resources "/projects", ProjectController, except: [:new, :edit]
   end
 
   # Unauthenticated Routes

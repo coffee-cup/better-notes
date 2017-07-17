@@ -7,6 +7,8 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
 import Api exposing (getCurrentUser)
+import Sidebar.Messages
+import Sidebar.Update
 import Chat.Messages
 import Chat.Update
 import Notes.Messages
@@ -87,21 +89,11 @@ update msg model =
             in
                 ( newModel_, newCmd_ )
 
+        SidebarMsg sidebarMsg ->
+            handleSidebarMsg sidebarMsg model
+
         NotesMsg notesMsg ->
-            let
-                ( newNotesModel, notesCmd, outMsg ) =
-                    Notes.Update.update notesMsg model.notesModel
-
-                newModel =
-                    { model | notesModel = newNotesModel }
-
-                newCmd =
-                    Cmd.map NotesMsg notesCmd
-
-                ( newModel_, newCmd_ ) =
-                    handleNotesOutMsg outMsg ( newModel, newCmd )
-            in
-                ( newModel_, newCmd_ )
+            handleNotesMsg notesMsg model
 
         PhoenixMsg msg ->
             let
@@ -165,13 +157,33 @@ handleChatOutMsg maybeOutMsg ( model, cmd ) =
                         )
 
 
-handleNotesOutMsg : Maybe Notes.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
-handleNotesOutMsg maybeOutMsg ( model, cmd ) =
-    case maybeOutMsg of
-        Nothing ->
-            ( model, cmd )
+handleNotesMsg : Notes.Messages.Msg -> Model -> ( Model, Cmd Msg )
+handleNotesMsg msg model =
+    case msg of
+        Notes.Messages.ToggleSidebar ->
+            ( { model | sidebarOpen = not model.sidebarOpen }, Cmd.none )
 
-        Just outMsg ->
-            case outMsg of
-                Notes.Messages.ToggleSidebar ->
-                    ( { model | sidebarOpen = not model.sidebarOpen }, cmd )
+        _ ->
+            let
+                ( newNotesModel, newNotesMsg ) =
+                    Notes.Update.update msg model.notesModel
+            in
+                ( { model | notesModel = newNotesModel }
+                , Cmd.map NotesMsg newNotesMsg
+                )
+
+
+handleSidebarMsg : Sidebar.Messages.Msg -> Model -> ( Model, Cmd Msg )
+handleSidebarMsg msg model =
+    case msg of
+        Sidebar.Messages.CreateProject projectName ->
+            ( model, Cmd.none )
+
+        _ ->
+            let
+                ( newSidebarModel, newSidebarMsg ) =
+                    Sidebar.Update.update msg model.sidebarModel
+            in
+                ( { model | sidebarModel = newSidebarModel }
+                , Cmd.map SidebarMsg newSidebarMsg
+                )

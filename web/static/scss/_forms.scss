@@ -16,4 +16,8 @@ input {
 
   border: solid 1px $primary-colour;
   border-radius: $bradius;
+
+  &.bnone {
+    border: none;
+  }
 }
