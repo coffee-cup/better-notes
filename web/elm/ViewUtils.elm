@@ -22,3 +22,8 @@ headingSmall title =
 heart : Html msg
 heart =
     span [ class "text-accent" ] [ text "♥" ]
+
+
+gutter : String
+gutter =
+    "ph6-ns ph4-m ph3"

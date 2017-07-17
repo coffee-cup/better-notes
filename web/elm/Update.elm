@@ -9,6 +9,8 @@ import Routing exposing (parseLocation, navigateTo, Sitemap(..))
 import Api exposing (getCurrentUser)
 import Chat.Messages
 import Chat.Update
+import Notes.Messages
+import Notes.Update
 
 
 port pageView : String -> Cmd msg
@@ -85,6 +87,22 @@ update msg model =
             in
                 ( newModel_, newCmd_ )
 
+        NotesMsg notesMsg ->
+            let
+                ( newNotesModel, notesCmd, outMsg ) =
+                    Notes.Update.update notesMsg model.notesModel
+
+                newModel =
+                    { model | notesModel = newNotesModel }
+
+                newCmd =
+                    Cmd.map NotesMsg notesCmd
+
+                ( newModel_, newCmd_ ) =
+                    handleNotesOutMsg outMsg ( newModel, newCmd )
+            in
+                ( newModel_, newCmd_ )
+
         PhoenixMsg msg ->
             let
                 ( phxSocket, phxCmd ) =
@@ -93,6 +111,9 @@ update msg model =
                 ( { model | phxSocket = phxSocket }
                 , Cmd.map PhoenixMsg phxCmd
                 )
+
+        ToggleSidebar ->
+            ( { model | sidebarOpen = not model.sidebarOpen }, Cmd.none )
 
         ShowHome ->
             ( model, changePage HomeRoute )
@@ -145,3 +166,15 @@ handleChatOutMsg maybeOutMsg ( model, cmd ) =
                             , Cmd.map PhoenixMsg phxCmd
                             ]
                         )
+
+
+handleNotesOutMsg : Maybe Notes.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
+handleNotesOutMsg maybeOutMsg ( model, cmd ) =
+    case maybeOutMsg of
+        Nothing ->
+            ( model, cmd )
+
+        Just outMsg ->
+            case outMsg of
+                Notes.Messages.OutNoOp ->
+                    ( model, cmd )

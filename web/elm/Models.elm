@@ -5,8 +5,9 @@ import Phoenix.Socket exposing (Socket)
 import Flags exposing (Flags)
 import Sockets exposing (initPhxSocket)
 import Messages exposing (Msg(..))
-import Types exposing (User)
+import User exposing (User)
 import Chat.Models
+import Notes.Models
 
 
 type alias Model =
@@ -14,9 +15,11 @@ type alias Model =
     , username : String
     , error : String
     , chatModel : Chat.Models.Model
+    , notesModel : Notes.Models.Model
     , phxSocket : Phoenix.Socket.Socket Msg
     , user : Maybe User
     , token : String
+    , sidebarOpen : Bool
     , route : Sitemap
     , flags : Flags
     }
@@ -28,9 +31,11 @@ initialModel flags sitemap =
     , username = ""
     , error = ""
     , chatModel = Chat.Models.initialModel
+    , notesModel = Notes.Models.initialModel
     , phxSocket = initPhxSocket flags
     , user = Nothing
     , token = ""
+    , sidebarOpen = not flags.onMobile
     , route = sitemap
     , flags = flags
     }

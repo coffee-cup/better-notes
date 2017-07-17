@@ -19,6 +19,7 @@ defmodule BetterNotes.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  # Authenticated routes
   scope "/api/v1", BetterNotes do
     pipe_through :api_auth
 
@@ -28,6 +29,7 @@ defmodule BetterNotes.Router do
     get "/users/current", UserController, :show
   end
 
+  # Unauthenticated Routes
   scope "/api/v1/auth", BetterNotes do
     pipe_through :api
 

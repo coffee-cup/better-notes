@@ -9,14 +9,13 @@ import Routing exposing (Sitemap(..))
 import ViewUtils exposing (..)
 import Auth.View
 import Notes.View
+import Sidebar
 
 
 view : Model -> Html Msg
 view model =
-    div [ class "ph6-ns ph4-m ph3" ]
+    div [ class "app" ]
         [ div [] [ page model ]
-        , p [ class "f2 error" ] [ text model.error ]
-        , footer
         ]
 
 
@@ -30,7 +29,7 @@ page model =
             Auth.View.view model
 
         NotesRoute ->
-            Notes.View.view model
+            notesView model
 
         AboutRoute ->
             aboutView model
@@ -81,6 +80,17 @@ homeView model =
         , Auth.View.viewLogin model
 
         --, Html.map ChatMsg (Chat.View.view model.chatModel)
+        ]
+
+
+notesView : Model -> Html Msg
+notesView model =
+    div [ classList [ ( "notes-page full", True ), ( "sidebar-open", model.sidebarOpen ) ] ]
+        [ Sidebar.view model
+        , div [ class "notes-wrapper" ]
+            [ span [ class "toggle-sidebar", onClick ToggleSidebar ] [ text "X" ]
+            , Html.map NotesMsg (Notes.View.view model.notesModel)
+            ]
         ]
 
 

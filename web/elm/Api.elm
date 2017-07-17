@@ -2,9 +2,8 @@ module Api exposing (getCurrentUser, loginFromCode, apiUrl)
 
 import Http
 import Json.Decode as Decode exposing (..)
-import Json.Decode.Extra as Decode exposing (..)
 import Messages exposing (Msg(..))
-import Types exposing (User)
+import User exposing (User, decodeUser)
 
 
 type Method
@@ -68,16 +67,6 @@ methodToString method =
 
         POST ->
             "POST"
-
-
-decodeUser : Decoder User
-decodeUser =
-    succeed User
-        |: (field "id" int)
-        |: (field "first_name" string)
-        |: (field "last_name" string)
-        |: (field "avatar" string)
-        |: (field "email" string)
 
 
 decodeToken : Decode.Decoder String

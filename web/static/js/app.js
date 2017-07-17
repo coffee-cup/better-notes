@@ -7,6 +7,12 @@ import '../scss/app.scss';
 
 // import socket from './socket';
 
+const mq = window.matchMedia('(max-width: 48em)');
+let onMobile = false;
+if (mq.matches) {
+  onMobile = true;
+}
+
 // Elm
 
 import Elm from '../../elm/Main.elm';
@@ -17,7 +23,8 @@ const tokenKey = 'token';
 const app = Elm.Main.embed(elmDiv, {
   prod: process.env.NODE_ENV === 'production',
   websocketUrl: process.env.WEBSOCKET_URL,
-  token: localStorage.getItem(tokenKey) || ''
+  token: localStorage.getItem(tokenKey) || '',
+  onMobile
 });
 
 app.ports.saveToken.subscribe(token => {

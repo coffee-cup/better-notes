@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Title</title>
+    <title>Better Notes</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +15,17 @@
     <!-- Search Engine -->
     <meta name="description" content="Short description of site.">
     <!-- Schema.org for Google -->
-    <meta itemprop="name" content="Title️">
+    <meta itemprop="name" content="Better Notes">
     <meta itemprop="description" content="Short description of site.">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Title">
+    <meta name="twitter:title" content="Better Notes">
     <meta name="twitter:description" content="Short description of site.">
     <meta name="twitter:creator" content="@jakerunzer">
 
     <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta name="og:title" content="Title">
+    <meta name="og:title" content="Better Notes">
     <meta name="og:description" content="Short description of site.">
     <meta name="og:url" content="https://elm-phoenix-template.herokuapp.com/">
     <meta name="og:site_name" content="Jake">
