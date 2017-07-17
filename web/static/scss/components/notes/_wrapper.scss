@@ -1,17 +1,5 @@
-.notes-wrapper {
+.notes {
   position: relative;
 
   background-color: $white;
-
-  .toggle-sidebar {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-
-    color: $text-dark;
-
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
 }

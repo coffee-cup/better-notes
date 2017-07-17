@@ -2,15 +2,15 @@
   --sidebar-width: 20%;
 
   @include break(xsmall) {
-    --sidebar-width: 80%;
+    --sidebar-width: 90%;
   }
 
   @include break(small) {
-    --sidebar-width: 60%;
+    --sidebar-width: 80%;
   }
 
   @include break(medium) {
-    --sidebar-width: 40%;
+    --sidebar-width: 30%;
   }
 }
 
@@ -20,10 +20,9 @@
   max-height: 100vh;
   overflow-y: hidden;
 
-  .notes-wrapper,
+  .notes,
   .sidebar {
     margin: 0;
-    padding: 1rem;
 
     transition: left .250s ease-out;
   }
@@ -36,17 +35,20 @@
     width: var(--sidebar-width);
   }
 
-  .notes-wrapper {
+  .notes {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 1;
+
+    display: flex;
+    flex-direction: column;
   }
 
   &.sidebar-open {
-    .notes-wrapper {
+    .notes {
       left: var(--sidebar-width);
     }
   }

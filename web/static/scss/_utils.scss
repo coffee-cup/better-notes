@@ -217,7 +217,7 @@
 
 // Background
 
-.bg-main {
+.bg-primary {
   background-color: $primary-colour;
 }
 
@@ -258,6 +258,14 @@
 
 .col {
   flex-direction: column;
+}
+
+.fg1 {
+  flex-grow: 1;
+}
+
+.fg0 {
+  flex-grow: 0;
 }
 
 // Misc

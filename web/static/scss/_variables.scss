@@ -1,4 +1,4 @@
-$lightgray: #999999;
+$lightgray: rgb(220, 220, 220);
 $darkgray: #333333;
 $white: #ffffff;
 
@@ -30,3 +30,9 @@ $bradius: .2rem;
 $side-padding-small: 1.5rem;
 
 $s-animation: 0.250s ease-in-out;
+
+$gutter: 1rem;
+
+:root {
+  --gutter: $gutter;
+}

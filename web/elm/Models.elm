@@ -8,6 +8,7 @@ import Messages exposing (Msg(..))
 import User exposing (User)
 import Chat.Models
 import Notes.Models
+import Sidebar.Models
 
 
 type alias Model =
@@ -16,6 +17,7 @@ type alias Model =
     , error : String
     , chatModel : Chat.Models.Model
     , notesModel : Notes.Models.Model
+    , sidebarModel : Sidebar.Models.Model
     , phxSocket : Phoenix.Socket.Socket Msg
     , user : Maybe User
     , token : String
@@ -32,6 +34,7 @@ initialModel flags sitemap =
     , error = ""
     , chatModel = Chat.Models.initialModel
     , notesModel = Notes.Models.initialModel
+    , sidebarModel = Sidebar.Models.initialModel
     , phxSocket = initPhxSocket flags
     , user = Nothing
     , token = ""

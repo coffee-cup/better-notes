@@ -9,7 +9,7 @@ import Routing exposing (Sitemap(..))
 import ViewUtils exposing (..)
 import Auth.View
 import Notes.View
-import Sidebar
+import Sidebar.View
 
 
 view : Model -> Html Msg
@@ -75,7 +75,7 @@ footer =
 
 homeView : Model -> Html Msg
 homeView model =
-    div [ class "home col full" ]
+    div [ class ("home col full" ++ gutter) ]
         [ header model
         , Auth.View.viewLogin model
 
@@ -86,11 +86,8 @@ homeView model =
 notesView : Model -> Html Msg
 notesView model =
     div [ classList [ ( "notes-page full", True ), ( "sidebar-open", model.sidebarOpen ) ] ]
-        [ Sidebar.view model
-        , div [ class "notes-wrapper" ]
-            [ span [ class "toggle-sidebar", onClick ToggleSidebar ] [ text "X" ]
-            , Html.map NotesMsg (Notes.View.view model.notesModel)
-            ]
+        [ Sidebar.View.view model.sidebarModel
+        , Html.map NotesMsg (Notes.View.view model.notesModel)
         ]
 
 

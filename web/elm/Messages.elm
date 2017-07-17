@@ -17,7 +17,6 @@ type Msg
     | JoinChannel
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveChatMessage JE.Value
-    | ToggleSidebar
     | ShowHome
     | ShowAbout
     | OnFetchLogin (Result Http.Error String)

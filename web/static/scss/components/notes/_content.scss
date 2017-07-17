@@ -1,0 +1,26 @@
+.notes-content {
+  flex-grow: 1;
+
+  .notes-list {
+  }
+
+  .notes-messageBox {
+    position: relative;
+    height: 16rem;
+    border-top: solid 1px $lightgray;
+
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 0;
+    //   right: 0;
+    //   left: 0;
+    //   height: 2rem;
+    //   background: linear-gradient(
+    //     180deg,
+    //     rgba($primary-colour, .15),
+    //     rgba($primary-colour, 0)
+    //   );
+    // }
+  }
+}

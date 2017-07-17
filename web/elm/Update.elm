@@ -112,9 +112,6 @@ update msg model =
                 , Cmd.map PhoenixMsg phxCmd
                 )
 
-        ToggleSidebar ->
-            ( { model | sidebarOpen = not model.sidebarOpen }, Cmd.none )
-
         ShowHome ->
             ( model, changePage HomeRoute )
 
@@ -176,5 +173,5 @@ handleNotesOutMsg maybeOutMsg ( model, cmd ) =
 
         Just outMsg ->
             case outMsg of
-                Notes.Messages.OutNoOp ->
-                    ( model, cmd )
+                Notes.Messages.ToggleSidebar ->
+                    ( { model | sidebarOpen = not model.sidebarOpen }, cmd )

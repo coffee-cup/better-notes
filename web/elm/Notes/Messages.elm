@@ -2,8 +2,8 @@ module Notes.Messages exposing (..)
 
 
 type Msg
-    = NoOp
+    = ToggleSidebarPressed
 
 
 type OutMsg
-    = OutNoOp
+    = ToggleSidebar
