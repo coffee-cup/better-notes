@@ -6,7 +6,7 @@ import Phoenix.Push
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
-import Api exposing (getCurrentUser)
+import Api exposing (getCurrentUser, getProjects)
 import Sidebar.Messages
 import Sidebar.Update
 import Chat.Messages
@@ -123,10 +123,16 @@ update msg model =
             ( { model | error = "Error logging in" }, changePage HomeRoute )
 
         OnFetchUser (Ok user) ->
-            ( { model | user = Just user }, Cmd.none )
+            ( { model | user = Just user }, getProjects model.token )
 
         OnFetchUser (Err _) ->
             ( { model | error = "Error fetching user" }, changePage HomeRoute )
+
+        OnFetchProjects (Ok projects) ->
+            handleSidebarMsg (Sidebar.Messages.ReceiveProjects projects) model
+
+        OnFetchProjects (Err _) ->
+            ( { model | error = "Error fetching projects" }, Cmd.none )
 
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )

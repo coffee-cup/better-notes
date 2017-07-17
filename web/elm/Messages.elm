@@ -5,6 +5,7 @@ import Navigation exposing (Location)
 import Json.Encode as JE
 import Http
 import Types.User exposing (User)
+import Types.Project exposing (Project)
 import Chat.Messages
 import Notes.Messages
 import Sidebar.Messages
@@ -23,3 +24,4 @@ type Msg
     | ShowAbout
     | OnFetchLogin (Result Http.Error String)
     | OnFetchUser (Result Http.Error User)
+    | OnFetchProjects (Result Http.Error (List Project))

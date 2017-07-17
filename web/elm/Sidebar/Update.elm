@@ -10,5 +10,8 @@ update msg model =
         SetNewProjectName string ->
             ( { model | projectName = string }, Cmd.none )
 
+        ReceiveProjects projects ->
+            ( { model | projects = projects }, Cmd.none )
+
         _ ->
             ( model, Cmd.none )

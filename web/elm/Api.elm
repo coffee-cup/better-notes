@@ -1,9 +1,10 @@
-module Api exposing (getCurrentUser, loginFromCode, apiUrl)
+module Api exposing (getCurrentUser, loginFromCode, apiUrl, getProjects)
 
 import Http
 import Json.Decode as Decode exposing (..)
 import Messages exposing (Msg(..))
 import Types.User exposing (User, decodeUser)
+import Types.Project exposing (Project, decodeProjects)
 
 
 type Method
@@ -11,7 +12,11 @@ type Method
     | POST
 
 
-getCurrentUser : String -> Cmd Msg
+type alias Token =
+    String
+
+
+getCurrentUser : Token -> Cmd Msg
 getCurrentUser token =
     let
         request =
@@ -26,22 +31,31 @@ loginFromCode code =
         |> Http.send OnFetchLogin
 
 
+getProjects : Token -> Cmd Msg
+getProjects token =
+    let
+        request =
+            getRequest token "/projects" decodeProjects
+    in
+        request |> Http.send OnFetchProjects
+
+
 apiUrl : String -> String
 apiUrl path =
     "/api/v1" ++ path
 
 
-getRequest : String -> String -> Decoder a -> Http.Request a
+getRequest : Token -> String -> Decoder a -> Http.Request a
 getRequest token path decoder =
     apiRequest token path GET Http.emptyBody decoder
 
 
-postRequest : String -> String -> Http.Body -> Decoder a -> Http.Request a
+postRequest : Token -> String -> Http.Body -> Decoder a -> Http.Request a
 postRequest token path body decoder =
     apiRequest token path POST body decoder
 
 
-apiRequest : String -> String -> Method -> Http.Body -> Decoder a -> Http.Request a
+apiRequest : Token -> String -> Method -> Http.Body -> Decoder a -> Http.Request a
 apiRequest token path method body decoder =
     let
         headers =
