@@ -6,7 +6,7 @@ import Phoenix.Push
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
-import Api exposing (getCurrentUser, getProjects, createProject)
+import Api exposing (..)
 import Sidebar.Messages
 import Sidebar.Update
 import Chat.Messages
@@ -147,6 +147,12 @@ update msg model =
         OnCreateProject (Err _) ->
             ( { model | error = "Error creating project" }, Cmd.none )
 
+        OnDeleteProject (Ok projectId) ->
+            handleSidebarMsg (Sidebar.Messages.ReceiveDeleteProject projectId) model
+
+        OnDeleteProject (Err _) ->
+            ( { model | error = "Error deleting project" }, Cmd.none )
+
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
 handleChatOutMsg maybeOutMsg ( model, cmd ) =
@@ -197,6 +203,9 @@ handleSidebarMsg msg model =
     case msg of
         Sidebar.Messages.CreateProject projectName ->
             ( model, createProject model.token projectName )
+
+        Sidebar.Messages.DeleteProject project ->
+            ( model, deleteProject model.token project )
 
         _ ->
             let

@@ -5,6 +5,7 @@ module Api
         , apiUrl
         , getProjects
         , createProject
+        , deleteProject
         )
 
 import Http
@@ -34,6 +35,7 @@ type Method
 type Route
     = Users
     | Projects
+    | DeleteProject Int
 
 
 type alias Token =
@@ -57,11 +59,8 @@ loginFromCode code =
 
 getProjects : Token -> Cmd Msg
 getProjects token =
-    let
-        request =
-            getRequest token Projects decodeProjects
-    in
-        request |> Http.send OnFetchProjects
+    (getRequest token Projects decodeProjects)
+        |> Http.send OnFetchProjects
 
 
 createProject : Token -> String -> Cmd Msg
@@ -76,6 +75,12 @@ createProject token name =
         request |> Http.send OnCreateProject
 
 
+deleteProject : Token -> Project -> Cmd Msg
+deleteProject token project =
+    (deleteRequest token (DeleteProject project.id) project.id)
+        |> Http.send OnDeleteProject
+
+
 apiUrl : String -> String
 apiUrl path =
     "/api/v1" ++ path
@@ -83,33 +88,51 @@ apiUrl path =
 
 getRequest : Token -> Route -> Decoder a -> Http.Request a
 getRequest token route decoder =
-    apiRequest token route GET Http.emptyBody decoder
+    Http.request
+        { method = (methodToString GET)
+        , headers = apiHeader token
+        , url = apiUrl (routeToString route)
+        , body = Http.emptyBody
+        , expect = Http.expectJson decoder
+        , timeout = Nothing
+        , withCredentials = False
+        }
 
 
 postRequest : Token -> Route -> Http.Body -> Decoder a -> Http.Request a
 postRequest token route body decoder =
-    apiRequest token route POST body decoder
+    Http.request
+        { method = (methodToString POST)
+        , headers = apiHeader token
+        , url = apiUrl (routeToString route)
+        , body = body
+        , expect = Http.expectJson decoder
+        , timeout = Nothing
+        , withCredentials = False
+        }
 
 
-apiRequest : Token -> Route -> Method -> Http.Body -> Decoder a -> Http.Request a
-apiRequest token route method body decoder =
-    let
-        path =
-            routeToString route
+deleteRequest : Token -> Route -> a -> Http.Request a
+deleteRequest token route a =
+    Http.request
+        { method = (methodToString DELETE)
+        , headers = apiHeader token
+        , url = apiUrl (routeToString route)
+        , body = Http.emptyBody
+        , expect = alwaysExpect a
+        , timeout = Nothing
+        , withCredentials = False
+        }
 
-        headers =
-            [ Http.header "Authorization" ("Bearer " ++ token)
-            ]
-    in
-        Http.request
-            { method = (methodToString method)
-            , headers = headers
-            , url = apiUrl path
-            , body = body
-            , expect = Http.expectJson decoder
-            , timeout = Nothing
-            , withCredentials = False
-            }
+
+alwaysExpect : a -> Http.Expect a
+alwaysExpect =
+    Http.expectStringResponse << always << Ok
+
+
+apiHeader : Token -> List Http.Header
+apiHeader token =
+    [ Http.header "Authorization" ("Bearer " ++ token) ]
 
 
 decodeToken : Decode.Decoder String
@@ -141,3 +164,6 @@ routeToString route =
 
         Projects ->
             "/projects"
+
+        DeleteProject id ->
+            "/projects" ++ "/" ++ (toString id)

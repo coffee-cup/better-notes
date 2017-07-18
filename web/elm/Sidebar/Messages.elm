@@ -9,3 +9,5 @@ type Msg
     | CreateProject String
     | ReceiveProjects (List Project)
     | ReceiveProject Project
+    | DeleteProject Project
+    | ReceiveDeleteProject Int

@@ -19,5 +19,12 @@ update msg model =
         ClearProjectName ->
             ( { model | projectName = "" }, Cmd.none )
 
+        ReceiveDeleteProject projectId ->
+            let
+                newProjects =
+                    List.filter (\p -> p.id /= projectId) model.projects
+            in
+                ( { model | projects = newProjects }, Cmd.none )
+
         _ ->
             ( model, Cmd.none )

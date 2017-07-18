@@ -26,3 +26,4 @@ type Msg
     | OnFetchUser (Result Http.Error User)
     | OnFetchProjects (Result Http.Error (List Project))
     | OnCreateProject (Result Http.Error Project)
+    | OnDeleteProject (Result Http.Error Int)

@@ -28,7 +28,11 @@ projectList projects =
 projectView : Project -> Html Msg
 projectView project =
     div [ class "project" ]
-        [ p [] [ text project.name ] ]
+        [ p [ class "flex" ]
+            [ span [ class "fg1 dim pointer" ] [ text project.name ]
+            , span [ onClick (DeleteProject project), class "project-delete pr2 f6 pointer" ] [ text "♻️" ]
+            ]
+        ]
 
 
 createProject : String -> Html Msg
