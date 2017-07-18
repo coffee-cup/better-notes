@@ -1,15 +1,39 @@
-module Api exposing (getCurrentUser, loginFromCode, apiUrl, getProjects)
+module Api
+    exposing
+        ( getCurrentUser
+        , loginFromCode
+        , apiUrl
+        , getProjects
+        , createProject
+        )
 
 import Http
 import Json.Decode as Decode exposing (..)
 import Messages exposing (Msg(..))
-import Types.User exposing (User, decodeUser)
-import Types.Project exposing (Project, decodeProjects)
+import Types.User
+    exposing
+        ( User
+        , decodeUser
+        )
+import Types.Project
+    exposing
+        ( Project
+        , decodeProject
+        , decodeProjects
+        , encodeNewProject
+        )
 
 
 type Method
     = GET
     | POST
+    | PUT
+    | DELETE
+
+
+type Route
+    = Users
+    | Projects
 
 
 type alias Token =
@@ -20,7 +44,7 @@ getCurrentUser : Token -> Cmd Msg
 getCurrentUser token =
     let
         request =
-            getRequest token "/users" decodeUser
+            getRequest token Users decodeUser
     in
         request |> Http.send OnFetchUser
 
@@ -35,9 +59,21 @@ getProjects : Token -> Cmd Msg
 getProjects token =
     let
         request =
-            getRequest token "/projects" decodeProjects
+            getRequest token Projects decodeProjects
     in
         request |> Http.send OnFetchProjects
+
+
+createProject : Token -> String -> Cmd Msg
+createProject token name =
+    let
+        body =
+            encodeNewProject name |> Http.jsonBody
+
+        request =
+            postRequest token Projects body decodeProject
+    in
+        request |> Http.send OnCreateProject
 
 
 apiUrl : String -> String
@@ -45,19 +81,22 @@ apiUrl path =
     "/api/v1" ++ path
 
 
-getRequest : Token -> String -> Decoder a -> Http.Request a
-getRequest token path decoder =
-    apiRequest token path GET Http.emptyBody decoder
+getRequest : Token -> Route -> Decoder a -> Http.Request a
+getRequest token route decoder =
+    apiRequest token route GET Http.emptyBody decoder
 
 
-postRequest : Token -> String -> Http.Body -> Decoder a -> Http.Request a
-postRequest token path body decoder =
-    apiRequest token path POST body decoder
+postRequest : Token -> Route -> Http.Body -> Decoder a -> Http.Request a
+postRequest token route body decoder =
+    apiRequest token route POST body decoder
 
 
-apiRequest : Token -> String -> Method -> Http.Body -> Decoder a -> Http.Request a
-apiRequest token path method body decoder =
+apiRequest : Token -> Route -> Method -> Http.Body -> Decoder a -> Http.Request a
+apiRequest token route method body decoder =
     let
+        path =
+            routeToString route
+
         headers =
             [ Http.header "Authorization" ("Bearer " ++ token)
             ]
@@ -73,6 +112,11 @@ apiRequest token path method body decoder =
             }
 
 
+decodeToken : Decode.Decoder String
+decodeToken =
+    field "access_token" Decode.string
+
+
 methodToString : Method -> String
 methodToString method =
     case method of
@@ -82,7 +126,18 @@ methodToString method =
         POST ->
             "POST"
 
+        PUT ->
+            "PUT"
 
-decodeToken : Decode.Decoder String
-decodeToken =
-    field "access_token" Decode.string
+        DELETE ->
+            "DELETE"
+
+
+routeToString : Route -> String
+routeToString route =
+    case route of
+        Users ->
+            "/users"
+
+        Projects ->
+            "/projects"

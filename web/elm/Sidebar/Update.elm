@@ -13,5 +13,11 @@ update msg model =
         ReceiveProjects projects ->
             ( { model | projects = projects }, Cmd.none )
 
+        ReceiveProject project ->
+            ( { model | projects = project :: model.projects }, Cmd.none )
+
+        ClearProjectName ->
+            ( { model | projectName = "" }, Cmd.none )
+
         _ ->
             ( model, Cmd.none )

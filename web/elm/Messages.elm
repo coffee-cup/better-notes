@@ -25,3 +25,4 @@ type Msg
     | OnFetchLogin (Result Http.Error String)
     | OnFetchUser (Result Http.Error User)
     | OnFetchProjects (Result Http.Error (List Project))
+    | OnCreateProject (Result Http.Error Project)

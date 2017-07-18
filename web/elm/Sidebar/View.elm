@@ -42,6 +42,6 @@ createProject projectName =
                 , class "bnone"
                 ]
                 []
-            , button [ onClick (CreateProject projectName), class "button" ] [ text "Create" ]
+            , button [ class "button" ] [ text "Create" ]
             ]
         ]

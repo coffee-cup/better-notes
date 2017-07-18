@@ -6,7 +6,7 @@ import Phoenix.Push
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
-import Api exposing (getCurrentUser, getProjects)
+import Api exposing (getCurrentUser, getProjects, createProject)
 import Sidebar.Messages
 import Sidebar.Update
 import Chat.Messages
@@ -134,6 +134,19 @@ update msg model =
         OnFetchProjects (Err _) ->
             ( { model | error = "Error fetching projects" }, Cmd.none )
 
+        OnCreateProject (Ok project) ->
+            let
+                ( newModel1, newCmd1 ) =
+                    handleSidebarMsg (Sidebar.Messages.ReceiveProject project) model
+
+                ( newModel2, newCmd2 ) =
+                    handleSidebarMsg (Sidebar.Messages.ClearProjectName) newModel1
+            in
+                ( newModel2, Cmd.batch [ newCmd1, newCmd2 ] )
+
+        OnCreateProject (Err _) ->
+            ( { model | error = "Error creating project" }, Cmd.none )
+
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
 handleChatOutMsg maybeOutMsg ( model, cmd ) =
@@ -183,7 +196,7 @@ handleSidebarMsg : Sidebar.Messages.Msg -> Model -> ( Model, Cmd Msg )
 handleSidebarMsg msg model =
     case msg of
         Sidebar.Messages.CreateProject projectName ->
-            ( model, Cmd.none )
+            ( model, createProject model.token projectName )
 
         _ ->
             let
