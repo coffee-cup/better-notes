@@ -133,7 +133,9 @@ update msg model =
         OnCreateProject (Ok project) ->
             let
                 ( newModel, newCmd ) =
-                    handleSidebarMsg (Sidebar.Messages.ClearProjectName) { model | projects = project :: model.projects }
+                    handleSidebarMsg
+                        (Sidebar.Messages.ClearProjectName)
+                        { model | projects = List.append model.projects [ project ] }
             in
                 ( newModel
                 , Cmd.batch
@@ -166,6 +168,9 @@ handleRoute model =
               }
             , Cmd.none
             )
+
+        NotesRoute ->
+            ( { model | selectedProject = Nothing }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )
