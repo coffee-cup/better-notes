@@ -5,8 +5,9 @@ defmodule BetterNotes.ProjectController do
   alias BetterNotes.Project
 
   def index(conn, _params) do
-    projects = from(p in Project, where: p.user_id == ^conn.assigns.user_id)
-    |> Repo.all()
+    projects =
+      from(p in Project, where: p.user_id == ^conn.assigns.user_id)
+      |> Repo.all()
     render(conn, "index.json", projects: projects)
   end
 
@@ -33,8 +34,12 @@ defmodule BetterNotes.ProjectController do
     case Repo.get_by(Project, id: id, user_id: conn.assigns.user_id) do
       %Project{} = project ->
         render(conn, "show.json", project: project)
-      _ -> render(conn, ErrorView, "404.json")
+      _ ->
+        render(conn, ErrorView, "404.json")
     end
+  end
+  def show(conn, _) do
+    render(conn, ErrorView, "400.json")
   end
 
   def update(conn, %{"id" => id, "project" => project_params}) do
@@ -49,8 +54,12 @@ defmodule BetterNotes.ProjectController do
             |> put_status(:unprocessable_entity)
             |> render(BetterNotes.ChangesetView, "error.json", changeset: changeset)
         end
-      _ -> render(conn, ErrorView, "404.json")
+      _ ->
+        render(conn, ErrorView, "404.json")
     end
+  end
+  def update(conn, _) do
+    render(conn, ErrorView, "400.json")
   end
 
   def delete(conn, %{"id" => id}) do
@@ -58,7 +67,11 @@ defmodule BetterNotes.ProjectController do
       %Project{} = project ->
         Repo.delete!(project)
         send_resp(conn, :no_content, "")
-      _ -> render(conn, ErrorView, "404.json")
+      _ ->
+        render(conn, ErrorView, "404.json")
     end
+  end
+  def delete(conn, _) do
+    render(conn, ErrorView, "400.json")
   end
 end

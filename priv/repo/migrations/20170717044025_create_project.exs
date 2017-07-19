@@ -8,7 +8,7 @@ defmodule BetterNotes.Repo.Migrations.CreateProject do
 
       timestamps()
     end
-    create index(:projects, [:user_id])
 
+    create index(:projects, [:user_id])
   end
 end

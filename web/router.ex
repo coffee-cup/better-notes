@@ -32,6 +32,7 @@ defmodule BetterNotes.Router do
 
     get "/users", UserController, :show
     resources "/projects", ProjectController, except: [:new, :edit]
+    resources "/projects/:project_id/notes", NoteController, except: [:new, :edit]
   end
 
   # Unauthenticated Routes

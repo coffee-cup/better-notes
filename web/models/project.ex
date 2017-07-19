@@ -5,6 +5,7 @@ defmodule BetterNotes.Project do
     field :name, :string
     belongs_to :user, BetterNotes.User
 
+    has_many :notes, BetterNotes.Note
     timestamps()
   end
 
