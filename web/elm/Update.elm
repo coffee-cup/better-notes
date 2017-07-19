@@ -1,5 +1,6 @@
 port module Update exposing (..)
 
+import Http exposing (decodeUri)
 import Phoenix.Socket
 import Phoenix.Channel
 import Phoenix.Push
@@ -154,8 +155,17 @@ update msg model =
 handleRoute : Model -> ( Model, Cmd Msg )
 handleRoute model =
     case model.route of
-        NotesProjectRoute projectName ->
-            ( { model | selectedProject = lookupProject projectName model.projects }, Cmd.none )
+        NotesProjectRoute projectNameEncoded ->
+            ( { model
+                | selectedProject =
+                    lookupProject
+                        ((decodeUri projectNameEncoded)
+                            |> Maybe.withDefault projectNameEncoded
+                        )
+                        model.projects
+              }
+            , Cmd.none
+            )
 
         _ ->
             ( model, Cmd.none )
