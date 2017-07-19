@@ -6,6 +6,7 @@ import Flags exposing (Flags)
 import Sockets exposing (initPhxSocket)
 import Messages exposing (Msg(..))
 import Types.User exposing (User)
+import Types.Project exposing (Project)
 import Chat.Models
 import Notes.Models
 import Sidebar.Models
@@ -20,6 +21,8 @@ type alias Model =
     , sidebarModel : Sidebar.Models.Model
     , phxSocket : Phoenix.Socket.Socket Msg
     , user : Maybe User
+    , projects : List Project
+    , selectedProject : Maybe Project
     , token : String
     , sidebarOpen : Bool
     , route : Sitemap
@@ -37,6 +40,8 @@ initialModel flags sitemap =
     , sidebarModel = Sidebar.Models.initialModel
     , phxSocket = initPhxSocket flags
     , user = Nothing
+    , projects = []
+    , selectedProject = Nothing
     , token = flags.token
     , sidebarOpen = not flags.onMobile
     , route = sitemap

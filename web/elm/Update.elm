@@ -129,26 +129,23 @@ update msg model =
             ( { model | error = "Error fetching user" }, changePage HomeRoute )
 
         OnFetchProjects (Ok projects) ->
-            handleSidebarMsg (Sidebar.Messages.ReceiveProjects projects) model
+            ( { model | projects = projects }, Cmd.none )
 
         OnFetchProjects (Err _) ->
             ( { model | error = "Error fetching projects" }, Cmd.none )
 
         OnCreateProject (Ok project) ->
-            let
-                ( newModel1, newCmd1 ) =
-                    handleSidebarMsg (Sidebar.Messages.ReceiveProject project) model
-
-                ( newModel2, newCmd2 ) =
-                    handleSidebarMsg (Sidebar.Messages.ClearProjectName) newModel1
-            in
-                ( newModel2, Cmd.batch [ newCmd1, newCmd2 ] )
+            handleSidebarMsg (Sidebar.Messages.ClearProjectName) model
 
         OnCreateProject (Err _) ->
             ( { model | error = "Error creating project" }, Cmd.none )
 
         OnDeleteProject (Ok projectId) ->
-            handleSidebarMsg (Sidebar.Messages.ReceiveDeleteProject projectId) model
+            let
+                newProjects =
+                    List.filter (\p -> p.id /= projectId) model.projects
+            in
+                ( { model | projects = newProjects }, Cmd.none )
 
         OnDeleteProject (Err _) ->
             ( { model | error = "Error deleting project" }, Cmd.none )
@@ -206,6 +203,9 @@ handleSidebarMsg msg model =
 
         Sidebar.Messages.DeleteProject project ->
             ( model, deleteProject model.token project )
+
+        Sidebar.Messages.SelectProject project ->
+            ( model, Cmd.none )
 
         _ ->
             let

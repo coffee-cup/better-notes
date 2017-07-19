@@ -86,8 +86,8 @@ homeView model =
 notesView : Model -> Html Msg
 notesView model =
     div [ classList [ ( "notes-page full", True ), ( "sidebar-open", model.sidebarOpen ) ] ]
-        [ Html.map SidebarMsg (Sidebar.View.view model.sidebarModel)
-        , Html.map NotesMsg (Notes.View.view model.notesModel)
+        [ Html.map SidebarMsg (Sidebar.View.view model.projects model.selectedProject model.sidebarModel)
+        , Html.map NotesMsg (Notes.View.view model.selectedProject model.notesModel)
         ]
 
 

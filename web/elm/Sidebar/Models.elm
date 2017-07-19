@@ -1,16 +1,12 @@
 module Sidebar.Models exposing (..)
 
-import Types.Project exposing (Project)
-
 
 type alias Model =
-    { projectName : String
-    , projects : List Project
+    { newProjectName : String
     }
 
 
 initialModel : Model
 initialModel =
-    { projectName = ""
-    , projects = []
+    { newProjectName = ""
     }

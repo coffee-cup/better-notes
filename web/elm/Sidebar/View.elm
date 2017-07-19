@@ -8,18 +8,18 @@ import Sidebar.Messages exposing (Msg(..))
 import Sidebar.Models exposing (Model)
 
 
-view : Model -> Html Msg
-view model =
+view : List Project -> Maybe Project -> Model -> Html Msg
+view projects maybeSelectedProject model =
     div [ class "sidebar pv4 flex col" ]
-        [ h1 [ class "f3 mt4 bold" ] [ text "Better Notes" ]
-        , projectList model.projects
-        , createProject model.projectName
+        [ h1 [ class "f3 mv2 bold" ] [ text "Better Notes" ]
+        , projectList projects
+        , createProject model.newProjectName
         ]
 
 
 projectList : List Project -> Html Msg
 projectList projects =
-    div [ class "project-list fg1" ]
+    div [ class "project-list fg1 mt4" ]
         ([ p [ class "f6 o-50" ] [ text "projects" ] ]
             ++ (List.map projectView projects)
         )

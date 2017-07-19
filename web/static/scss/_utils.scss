@@ -178,25 +178,17 @@
 }
 
 .vertical-center {
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
 .vertical-center-not-small {
   @include break(not-small) {
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 }

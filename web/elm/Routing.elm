@@ -32,6 +32,12 @@ notesR =
     NotesRoute := static "notes"
 
 
+
+--notesProjectR : Route.Route Sitemap
+--notesProjectR =
+--    NotesProjectRoute := static "notes" </> string
+
+
 sitemap : Route.Router Sitemap
 sitemap =
     router [ homeR, aboutR, authR, notesR ]
