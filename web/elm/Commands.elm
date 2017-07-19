@@ -1,6 +1,5 @@
 module Commands exposing (..)
 
-import Http
 import Json.Decode as Decode exposing (field)
 import Navigation exposing (Location)
 import Messages exposing (Msg(..))
@@ -23,17 +22,20 @@ getLoginCommand loc =
 getUserCommand : Location -> Flags -> Cmd Msg
 getUserCommand loc flags =
     case Routing.parseLocation loc of
-        NotesRoute ->
-            getCurrentUser flags.token
-
-        _ ->
+        HomeRoute ->
             Cmd.none
 
+        AboutRoute ->
+            Cmd.none
 
-getText : Cmd Msg
-getText =
-    Http.get "/api/" decodeTextUrl
-        |> Http.send OnFetchText
+        AuthRoute ->
+            Cmd.none
+
+        NotFoundRoute ->
+            Cmd.none
+
+        _ ->
+            getCurrentUser flags.token
 
 
 decodeTextUrl : Decode.Decoder String

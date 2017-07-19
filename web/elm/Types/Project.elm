@@ -11,6 +11,12 @@ type alias Project =
     }
 
 
+lookupProject : String -> List Project -> Maybe Project
+lookupProject name projects =
+    List.filter (\p -> p.name == name) projects
+        |> List.head
+
+
 decodeProjects : Decoder (List Project)
 decodeProjects =
     JD.list decodeProject

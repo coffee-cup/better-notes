@@ -31,6 +31,9 @@ page model =
         NotesRoute ->
             notesView model
 
+        NotesProjectRoute name ->
+            notesView model
+
         AboutRoute ->
             aboutView model
 

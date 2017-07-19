@@ -1,4 +1,8 @@
 .project {
+  &.selected {
+    color: $secondary-colour;
+  }
+
   &-delete {
     opacity: 0;
     display: flex;

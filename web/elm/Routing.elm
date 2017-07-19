@@ -9,6 +9,7 @@ type Sitemap
     | AboutRoute
     | AuthRoute
     | NotesRoute
+    | NotesProjectRoute String
     | NotFoundRoute
 
 
@@ -32,15 +33,14 @@ notesR =
     NotesRoute := static "notes"
 
 
-
---notesProjectR : Route.Route Sitemap
---notesProjectR =
---    NotesProjectRoute := static "notes" </> string
+notesProjectR : Route.Route Sitemap
+notesProjectR =
+    NotesProjectRoute := static "notes" </> string
 
 
 sitemap : Route.Router Sitemap
 sitemap =
-    router [ homeR, aboutR, authR, notesR ]
+    router [ homeR, aboutR, authR, notesR, notesProjectR ]
 
 
 removeTrailingSlash : String -> String
@@ -73,6 +73,9 @@ toString r =
 
         NotesRoute ->
             reverse notesR []
+
+        NotesProjectRoute projectName ->
+            reverse notesProjectR [ projectName ]
 
         NotFoundRoute ->
             "/404"

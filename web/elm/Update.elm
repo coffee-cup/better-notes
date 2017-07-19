@@ -7,6 +7,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
 import Api exposing (..)
+import Types.Project exposing (Project, lookupProject)
 import Sidebar.Messages
 import Sidebar.Update
 import Chat.Messages
@@ -37,13 +38,7 @@ update msg model =
                 newRoute =
                     parseLocation location
             in
-                ( { model | route = newRoute }, Cmd.none )
-
-        OnFetchText (Ok newText) ->
-            ( { model | text = newText }, Cmd.none )
-
-        OnFetchText (Err _) ->
-            ( model, Cmd.none )
+                handleRoute { model | route = newRoute }
 
         ReceiveChatMessage chatMessage ->
             let
@@ -129,7 +124,7 @@ update msg model =
             ( { model | error = "Error fetching user" }, changePage HomeRoute )
 
         OnFetchProjects (Ok projects) ->
-            ( { model | projects = projects }, Cmd.none )
+            handleRoute { model | projects = projects }
 
         OnFetchProjects (Err _) ->
             ( { model | error = "Error fetching projects" }, Cmd.none )
@@ -149,6 +144,16 @@ update msg model =
 
         OnDeleteProject (Err _) ->
             ( { model | error = "Error deleting project" }, Cmd.none )
+
+
+handleRoute : Model -> ( Model, Cmd Msg )
+handleRoute model =
+    case model.route of
+        NotesProjectRoute projectName ->
+            ( { model | selectedProject = lookupProject projectName model.projects }, Cmd.none )
+
+        _ ->
+            ( model, Cmd.none )
 
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
@@ -205,7 +210,7 @@ handleSidebarMsg msg model =
             ( model, deleteProject model.token project )
 
         Sidebar.Messages.SelectProject project ->
-            ( model, Cmd.none )
+            ( model, changePage (NotesProjectRoute project.name) )
 
         _ ->
             let

@@ -13,7 +13,6 @@ import Sidebar.Messages
 
 type Msg
     = OnLocationChange Location
-    | OnFetchText (Result Http.Error String)
     | ChatMsg Chat.Messages.Msg
     | NotesMsg Notes.Messages.Msg
     | SidebarMsg Sidebar.Messages.Msg
