@@ -130,17 +130,22 @@ update msg model =
             ( { model | error = "Error fetching projects" }, Cmd.none )
 
         OnCreateProject (Ok project) ->
-            handleSidebarMsg (Sidebar.Messages.ClearProjectName) model
+            let
+                ( newModel, newCmd ) =
+                    handleSidebarMsg (Sidebar.Messages.ClearProjectName) { model | projects = project :: model.projects }
+            in
+                ( newModel
+                , Cmd.batch
+                    [ newCmd
+                    , changePage (NotesProjectRoute project.name)
+                    ]
+                )
 
         OnCreateProject (Err _) ->
             ( { model | error = "Error creating project" }, Cmd.none )
 
         OnDeleteProject (Ok projectId) ->
-            let
-                newProjects =
-                    List.filter (\p -> p.id /= projectId) model.projects
-            in
-                ( { model | projects = newProjects }, Cmd.none )
+            handleDeleteProject projectId model
 
         OnDeleteProject (Err _) ->
             ( { model | error = "Error deleting project" }, Cmd.none )
@@ -220,3 +225,28 @@ handleSidebarMsg msg model =
                 ( { model | sidebarModel = newSidebarModel }
                 , Cmd.map SidebarMsg newSidebarMsg
                 )
+
+
+handleDeleteProject : Int -> Model -> ( Model, Cmd Msg )
+handleDeleteProject projectId model =
+    let
+        newProjects =
+            List.filter (\p -> p.id /= projectId) model.projects
+
+        newCmd =
+            case model.selectedProject of
+                Just project ->
+                    if project.id == projectId then
+                        case List.head newProjects of
+                            Just headProject ->
+                                changePage (NotesProjectRoute headProject.name)
+
+                            Nothing ->
+                                changePage NotesRoute
+                    else
+                        Cmd.none
+
+                Nothing ->
+                    Cmd.none
+    in
+        ( { model | projects = newProjects }, newCmd )
