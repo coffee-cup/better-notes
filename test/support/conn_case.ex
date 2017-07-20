@@ -29,6 +29,22 @@ defmodule BetterNotes.ConnCase do
 
       # The default endpoint for testing
       @endpoint BetterNotes.Endpoint
+
+      # Sign in the user and place the `jwt` token in the headers
+      def guardian_login(%BetterNotes.User{} = user), do: guardian_login(conn(), user, :token, [])
+      def guardian_login(%BetterNotes.User{} = user, token), do: guardian_login(conn(), user, token, [])
+      def guardian_login(%BetterNotes.User{} = user, token, opts), do: guardian_login(conn(), user, token, opts)
+
+      def guardian_login(%Plug.Conn{} = conn, user), do: guardian_login(conn, user, :token, [])
+      def guardian_login(%Plug.Conn{} = conn, user, token), do: guardian_login(conn, user, token, [])
+      def guardian_login(%Plug.Conn{} = conn, user, token, opts) do
+        auth_conn = Guardian.Plug.api_sign_in(conn, user)
+        jwt = Guardian.Plug.current_token(auth_conn)
+
+        auth_conn
+        |> put_req_header("authorization", "Bearer #{jwt}")
+        |> put_req_header("accept", "application/json")
+      end
     end
   end
 
