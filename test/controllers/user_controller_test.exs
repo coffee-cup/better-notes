@@ -2,7 +2,14 @@ defmodule BetterNotes.UserControllerTest do
   use BetterNotes.ConnCase
 
   alias BetterNotes.User
-  @valid_attrs %{auth_provider: "some content", avatar: "some content", email: "some content", first_name: "some content", last_name: "some content"}
+
+  @valid_attrs %{
+    auth_provider: "some content",
+    avatar: "some content",
+    email: "some content",
+    first_name: "some content",
+    last_name: "some content"
+  }
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -27,7 +34,7 @@ defmodule BetterNotes.UserControllerTest do
   end
 
   test "unauthorized error when user has not been created", %{conn: conn} do
-    user = User.changeset %User{}, @valid_attrs
+    user = Map.put(User.changeset(%User{}, @valid_attrs), :id, 1)
     conn = guardian_login(conn, user)
     conn = get conn, user_path(conn, :show)
     assert conn.status == 401

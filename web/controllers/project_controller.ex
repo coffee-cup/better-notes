@@ -23,11 +23,12 @@ defmodule BetterNotes.ProjectController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
+        |> put_status(201)
         |> render(BetterNotes.ChangesetView, "error.json", changeset: changeset)
     end
   end
   def create(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
   def show(conn, %{"id" => id}) do
@@ -35,14 +36,14 @@ defmodule BetterNotes.ProjectController do
       %Project{} = project ->
         render(conn, "show.json", project: project)
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def show(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
-  def update(conn, %{"id" => id, "project" => project_params}) do
+  def update(conn, %{"id" => id, "name" => _} = project_params) do
     case Repo.get_by(Project, id: id, user_id: conn.assigns.user_id) do
       %Project{} = project ->
         changeset = Project.changeset(project, project_params)
@@ -55,23 +56,23 @@ defmodule BetterNotes.ProjectController do
             |> render(BetterNotes.ChangesetView, "error.json", changeset: changeset)
         end
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def update(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
   def delete(conn, %{"id" => id}) do
     case Repo.get_by(Project, id: id, user_id: conn.assigns.user_id) do
       %Project{} = project ->
         Repo.delete!(project)
-        send_resp(conn, :no_content, "")
+        conn |> put_status(204) |> send_resp(:no_content, "")
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def delete(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 end
