@@ -20,7 +20,6 @@ defmodule BetterNotes.NoteController do
 
     case Repo.insert(changeset) do
       {:ok, note} ->
-        IO.inspect note
         conn
         |> put_status(:created)
         |> put_resp_header("location", note_path(conn, :show, note.project_id, note))
@@ -32,23 +31,23 @@ defmodule BetterNotes.NoteController do
     end
   end
   def create(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
-  def show(conn, %{"id" => id}) do
-    case Repo.get(Note, id) do
+  def show(conn, %{"id" => id, "project_id" => project_id}) do
+    case Repo.get_by(Note, id: id, project_id: project_id) do
       %Note{} = note ->
         render(conn, "show.json", note: note)
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def show(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
-  def update(conn, %{"id" => id, "note" => note_params}) do
-    case Repo.get(Note, id) do
+  def update(conn, %{"id" => id, "text" => _, "project_id" => project_id} = note_params) do
+    case Repo.get_by(Note, id: id, project_id: project_id) do
       %Note{} = note ->
         changeset = Note.changeset(note, note_params)
         case Repo.update(changeset) do
@@ -60,24 +59,24 @@ defmodule BetterNotes.NoteController do
             |> render(BetterNotes.ChangesetView, "error.json", changeset: changeset)
         end
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def update(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
-  def delete(conn, %{"id" => id}) do
-    case Repo.get(Note, id) do
+  def delete(conn, %{"id" => id, "project_id" => project_id}) do
+    case Repo.get_by(Note, id: id, project_id: project_id) do
       %Note{} = note ->
         Repo.delete!(note)
         send_resp(conn, :no_content, "")
       _ ->
-        render(conn, ErrorView, "404.json")
+        conn |> put_status(404) |> render(ErrorView, "404.json")
     end
   end
   def delete(conn, _) do
-    render(conn, ErrorView, "400.json")
+    conn |> put_status(400) |> render(ErrorView, "400.json")
   end
 
   # Try to convert a `project_id` in the params to an integer
@@ -96,7 +95,7 @@ defmodule BetterNotes.NoteController do
   # Does the user have access to the project with `id`
   defp has_access(%{:params => %{"project_id" => project_id}} = conn, _) do
     case Repo.get_by(Project, id: project_id, user_id: conn.assigns.user_id) do
-      %Project{} = project -> conn
+      %Project{} -> conn
       _ -> conn |> put_status(401) |> render(ErrorView, "401.json") |> halt
     end
   end

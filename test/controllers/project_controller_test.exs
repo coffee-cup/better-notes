@@ -4,18 +4,17 @@ defmodule BetterNotes.ProjectControllerTest do
   alias BetterNotes.User
   alias BetterNotes.Project
 
-  @valid_user_attrs %{
-    auth_provider: "some content",
-    avatar: "some content",
-    email: "some content",
-    first_name: "some content",
-    last_name: "some content"
-  }
   @valid_attrs %{name: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
-    user = Repo.insert! User.changeset(%User{}, @valid_user_attrs)
+    user = Repo.insert! User.changeset(%User{}, %{
+      auth_provider: "some content",
+      avatar: "some content",
+      email: "some content",
+      first_name: "some content",
+      last_name: "some content"
+    })
     {:ok, conn: conn |> guardian_login(user)}
   end
 
@@ -34,7 +33,7 @@ defmodule BetterNotes.ProjectControllerTest do
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
     conn = get conn, project_path(conn, :show, -1)
-    assert conn.status == 404
+    assert response(conn, 404)
   end
 
   test "creates and renders resource when data is valid", %{conn: conn} do
@@ -45,7 +44,7 @@ defmodule BetterNotes.ProjectControllerTest do
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
     conn = post conn, project_path(conn, :create), @invalid_attrs
-    assert conn.status == 400
+    assert response(conn, 400)
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
@@ -58,7 +57,7 @@ defmodule BetterNotes.ProjectControllerTest do
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     project = Repo.insert! Project.changeset(%Project{user_id: conn.assigns.user_id}, @valid_attrs)
     conn = put conn, project_path(conn, :update, project), @invalid_attrs
-    assert conn.status == 400
+    assert response(conn, 400)
   end
 
   test "deletes chosen resource", %{conn: conn} do
@@ -74,6 +73,6 @@ defmodule BetterNotes.ProjectControllerTest do
     conn = guardian_login(conn, user)
 
     conn = get conn, project_path(conn, :show, project)
-    assert conn.status == 404
+    assert response(conn, 404)
   end
 end

@@ -10,7 +10,6 @@ defmodule BetterNotes.UserControllerTest do
     first_name: "some content",
     last_name: "some content"
   }
-  @invalid_attrs %{}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -30,13 +29,13 @@ defmodule BetterNotes.UserControllerTest do
 
   test "unauthorized error when user is not logged in", %{conn: conn} do
     conn = get conn, user_path(conn, :show)
-    assert conn.status == 401
+    assert response(conn, 401)
   end
 
   test "unauthorized error when user has not been created", %{conn: conn} do
     user = Map.put(User.changeset(%User{}, @valid_attrs), :id, 1)
     conn = guardian_login(conn, user)
     conn = get conn, user_path(conn, :show)
-    assert conn.status == 401
+    assert response(conn, 401)
   end
 end
