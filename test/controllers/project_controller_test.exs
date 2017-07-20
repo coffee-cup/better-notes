@@ -67,4 +67,13 @@ defmodule BetterNotes.ProjectControllerTest do
     assert response(conn, 204)
     refute Repo.get(Project, project.id)
   end
+
+  test "other user does not have access to project", %{conn: conn} do
+    project = Repo.insert! Project.changeset(%Project{user_id: conn.assigns.user_id}, @valid_attrs)
+    user = Repo.insert! %User{}
+    conn = guardian_login(conn, user)
+
+    conn = get conn, project_path(conn, :show, project)
+    assert conn.status == 404
+  end
 end
