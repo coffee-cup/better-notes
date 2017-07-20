@@ -20,7 +20,6 @@ defmodule BetterNotes.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    IO.inspect auth
     case AuthUser.find_or_create(auth) do
       {:ok, user} ->
         sign_in_user(conn, %{"user" => user})

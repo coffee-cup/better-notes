@@ -56,7 +56,7 @@ emptyContent =
         [ div []
             [ h2 [ class "f1 mv0" ]
                 [ text "No Project Selected" ]
-            , p [] [ text "Selected or create a project from the sidebar." ]
+            , p [] [ text "Select or create a project from the sidebar." ]
             ]
         ]
 

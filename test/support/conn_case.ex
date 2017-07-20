@@ -42,6 +42,8 @@ defmodule BetterNotes.ConnCase do
         jwt = Guardian.Plug.current_token(auth_conn)
 
         auth_conn
+        |> assign(:user, user)
+        |> assign(:user_id, user.id)
         |> put_req_header("authorization", "Bearer #{jwt}")
         |> put_req_header("accept", "application/json")
       end

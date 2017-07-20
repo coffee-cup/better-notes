@@ -80,6 +80,8 @@ defmodule BetterNotes.NoteController do
     render(conn, ErrorView, "400.json")
   end
 
+  # Try to convert a `project_id` in the params to an integer
+  # If it fails, halt request and render a bad request error
   defp project_id_int(%{:params => %{"project_id" => project_id}} = conn, _) do
     case Integer.parse(project_id) do
       {i, ""} ->
