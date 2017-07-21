@@ -6,6 +6,7 @@ import Json.Encode as JE
 import Http
 import Types.User exposing (User)
 import Types.Project exposing (Project)
+import Types.Note exposing (Note)
 import Chat.Messages
 import Notes.Messages
 import Sidebar.Messages
@@ -26,3 +27,5 @@ type Msg
     | OnFetchProjects (Result Http.Error (List Project))
     | OnCreateProject (Result Http.Error Project)
     | OnDeleteProject (Result Http.Error Int)
+    | OnFetchNotes (Result Http.Error (List Note))
+    | OnCreateNote (Result Http.Error Note)

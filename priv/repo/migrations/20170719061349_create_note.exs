@@ -3,8 +3,8 @@ defmodule BetterNotes.Repo.Migrations.CreateNote do
 
   def change do
     create table(:notes) do
-      add :text, :string
-      add :html, :string
+      add :text, :text
+      add :html, :text
       add :project_id, references(:projects, on_delete: :delete_all)
 
       timestamps()

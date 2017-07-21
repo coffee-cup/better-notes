@@ -8,7 +8,13 @@ import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Routing exposing (parseLocation, navigateTo, Sitemap(..))
 import Api exposing (..)
-import Types.Project exposing (Project, lookupProject)
+import Types.Project
+    exposing
+        ( Project
+        , lookupProject
+        , addNotesToProject
+        , addNoteToProject
+        )
 import Sidebar.Messages
 import Sidebar.Update
 import Chat.Messages
@@ -116,19 +122,19 @@ update msg model =
             )
 
         OnFetchLogin (Err _) ->
-            ( { model | error = "Error logging in" }, changePage HomeRoute )
+            ( errorModel model "Error logging in", changePage HomeRoute )
 
         OnFetchUser (Ok user) ->
             ( { model | user = Just user }, getProjects model.token )
 
         OnFetchUser (Err _) ->
-            ( { model | error = "Error fetching user" }, changePage HomeRoute )
+            ( errorModel model "Error fetching user", changePage HomeRoute )
 
         OnFetchProjects (Ok projects) ->
             handleRoute { model | projects = projects }
 
         OnFetchProjects (Err _) ->
-            ( { model | error = "Error fetching projects" }, Cmd.none )
+            ( errorModel model "Error fetching projects", Cmd.none )
 
         OnCreateProject (Ok project) ->
             let
@@ -145,35 +151,87 @@ update msg model =
                 )
 
         OnCreateProject (Err _) ->
-            ( { model | error = "Error creating project" }, Cmd.none )
+            ( errorModel model "Error creating project", Cmd.none )
 
         OnDeleteProject (Ok projectId) ->
             handleDeleteProject projectId model
 
         OnDeleteProject (Err _) ->
-            ( { model | error = "Error deleting project" }, Cmd.none )
+            ( errorModel model "Error deleting project", Cmd.none )
+
+        OnFetchNotes (Ok notes) ->
+            let
+                newProjects =
+                    case List.head notes of
+                        Just note ->
+                            addNotesToProject note.projectId notes model.projects
+
+                        Nothing ->
+                            model.projects
+
+                newModel =
+                    { model | projects = newProjects }
+            in
+                ( { newModel | selectedProject = findSelectedProject newModel }, Cmd.none )
+
+        OnFetchNotes (Err _) ->
+            ( errorModel model "Error fetching notes", Cmd.none )
+
+        OnCreateNote (Ok note) ->
+            let
+                newProjects =
+                    addNoteToProject note.projectId note model.projects
+
+                newModel =
+                    { model | projects = newProjects }
+            in
+                ( { newModel | selectedProject = findSelectedProject newModel }, Cmd.none )
+
+        OnCreateNote (Err _) ->
+            ( errorModel model "Error creating note", Cmd.none )
 
 
 handleRoute : Model -> ( Model, Cmd Msg )
 handleRoute model =
     case model.route of
         NotesProjectRoute projectNameEncoded ->
-            ( { model
-                | selectedProject =
-                    lookupProject
-                        ((decodeUri projectNameEncoded)
-                            |> Maybe.withDefault projectNameEncoded
-                        )
-                        model.projects
-              }
-            , Cmd.none
-            )
+            let
+                selectedProject =
+                    findSelectedProject model
+
+                maybeGetNotesCmd =
+                    case selectedProject of
+                        Just project ->
+                            getProjectNotes model.token project
+
+                        Nothing ->
+                            Cmd.none
+            in
+                ( { model
+                    | selectedProject = selectedProject
+                  }
+                , maybeGetNotesCmd
+                )
 
         NotesRoute ->
             ( { model | selectedProject = Nothing }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )
+
+
+findSelectedProject : Model -> Maybe Project
+findSelectedProject model =
+    case model.route of
+        NotesProjectRoute projectNameEncoded ->
+            lookupProject
+                ((decodeUri projectNameEncoded)
+                    |> Maybe.withDefault projectNameEncoded
+                )
+                model.projects
+
+        _ ->
+            Nothing
 
 
 handleChatOutMsg : Maybe Chat.Messages.OutMsg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
@@ -265,3 +323,8 @@ handleDeleteProject projectId model =
                     Cmd.none
     in
         ( { model | projects = newProjects }, newCmd )
+
+
+errorModel : Model -> String -> Model
+errorModel model error =
+    { model | error = error }

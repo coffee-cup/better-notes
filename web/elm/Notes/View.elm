@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Types.Project exposing (Project)
+import Types.Note exposing (Note)
 import Notes.Models exposing (Model)
 import Notes.Messages exposing (..)
 
@@ -45,7 +46,7 @@ header maybeSelectedProject =
 notesContent : Project -> Model -> Html Msg
 notesContent project model =
     div [ class "notes-content flex col" ]
-        [ notesList model
+        [ notesList project.notes
         , messageBox model
         ]
 
@@ -61,16 +62,41 @@ emptyContent =
         ]
 
 
-notesList : Model -> Html Msg
-notesList model =
-    div [ class "notes-list pa4 fg1" ]
-        [ h2 []
-            [ text "this is where the notes go."
+notesList : List Note -> Html Msg
+notesList notes =
+    let
+        notesView =
+            case notes of
+                [] ->
+                    emptyNotesList
+
+                _ ->
+                    populatedNotesList notes
+    in
+        div [ class "notes-list measure-wide lh-copy pa4 fg1" ]
+            [ notesView
             ]
-        ]
+
+
+emptyNotesList : Html Msg
+emptyNotesList =
+    div [ class "notes-list-empty vertical-center" ]
+        [ h2 [] [ text "You have no notes..." ] ]
+
+
+populatedNotesList : List Note -> Html Msg
+populatedNotesList notes =
+    div []
+        (List.map noteView notes)
+
+
+noteView : Note -> Html Msg
+noteView note =
+    div [ class "note pv2" ]
+        [ text note.text ]
 
 
 messageBox : Model -> Html Msg
 messageBox model =
     div [ class "notes-messageBox" ]
-        [ textarea [ placeholder "Write anything...", class "w-100 h-100 pa4" ] [] ]
+        [ textarea [ placeholder "Write anything...", class "w-100 h-100 pa4 mono" ] [] ]

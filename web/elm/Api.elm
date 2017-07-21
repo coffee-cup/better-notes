@@ -6,6 +6,8 @@ module Api
         , getProjects
         , createProject
         , deleteProject
+        , getProjectNotes
+        , createProjectNote
         )
 
 import Http
@@ -23,6 +25,13 @@ import Types.Project
         , decodeProjects
         , encodeNewProject
         )
+import Types.Note
+    exposing
+        ( Note
+        , decodeNote
+        , decodeNotes
+        , encodeNewNote
+        )
 
 
 type Method
@@ -35,11 +44,16 @@ type Method
 type Route
     = Users
     | Projects
-    | DeleteProject Int
+    | DeleteProject Project
+    | Notes Project
 
 
 type alias Token =
     String
+
+
+
+-- Users
 
 
 getCurrentUser : Token -> Cmd Msg
@@ -55,6 +69,10 @@ loginFromCode : String -> Cmd Msg
 loginFromCode code =
     Http.get (apiUrl "/auth/google/callback?code=" ++ code) decodeToken
         |> Http.send OnFetchLogin
+
+
+
+-- Projects
 
 
 getProjects : Token -> Cmd Msg
@@ -77,8 +95,30 @@ createProject token name =
 
 deleteProject : Token -> Project -> Cmd Msg
 deleteProject token project =
-    (deleteRequest token (DeleteProject project.id) project.id)
+    (deleteRequest token (DeleteProject project) project.id)
         |> Http.send OnDeleteProject
+
+
+
+-- Notes
+
+
+getProjectNotes : Token -> Project -> Cmd Msg
+getProjectNotes token project =
+    (getRequest token (Notes project) decodeNotes)
+        |> Http.send OnFetchNotes
+
+
+createProjectNote : Token -> String -> Project -> Cmd Msg
+createProjectNote token text project =
+    let
+        body =
+            encodeNewNote text project.id |> Http.jsonBody
+
+        request =
+            postRequest token (Notes project) body decodeNote
+    in
+        request |> Http.send OnCreateNote
 
 
 apiUrl : String -> String
@@ -165,5 +205,8 @@ routeToString route =
         Projects ->
             "/projects"
 
-        DeleteProject id ->
-            "/projects" ++ "/" ++ (toString id)
+        DeleteProject project ->
+            "/projects" ++ "/" ++ (toString project.id)
+
+        Notes project ->
+            "/projects/" ++ (toString project.id) ++ "/notes"
