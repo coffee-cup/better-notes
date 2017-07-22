@@ -16,10 +16,16 @@
 
   cursor: pointer;
   transition: transform .250s ease-out;
+
+  &--noRadius {
+    border-radius: 0;
+  }
+
   &:hover {
     transform: scale(1.05);
     opacity: 1;
   }
+
   &:active {
     transform: scale(1.02);
   }

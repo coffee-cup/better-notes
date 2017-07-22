@@ -9,5 +9,13 @@
     position: relative;
     height: 16rem;
     border-top: solid 1px $lightgray;
+
+    @include max-screen-height(700px) {
+      height: 10rem;
+    }
+
+    @include max-screen-height(500px) {
+      height: 6rem;
+    }
   }
 }

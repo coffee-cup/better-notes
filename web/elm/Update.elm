@@ -184,8 +184,13 @@ update msg model =
 
                 newModel =
                     { model | projects = newProjects }
+
+                newModel2 =
+                    { newModel | selectedProject = findSelectedProject newModel }
             in
-                ( { newModel | selectedProject = findSelectedProject newModel }, Cmd.none )
+                handleNotesMsg
+                    Notes.Messages.ClearNoteText
+                    newModel2
 
         OnCreateNote (Err _) ->
             ( errorModel model "Error creating note", Cmd.none )
@@ -267,6 +272,18 @@ handleNotesMsg msg model =
     case msg of
         Notes.Messages.ToggleSidebar ->
             ( { model | sidebarOpen = not model.sidebarOpen }, Cmd.none )
+
+        Notes.Messages.CreateNote noteText ->
+            let
+                newCmd =
+                    case model.selectedProject of
+                        Just project ->
+                            createProjectNote model.token noteText project
+
+                        Nothing ->
+                            Cmd.none
+            in
+                ( model, newCmd )
 
         _ ->
             let

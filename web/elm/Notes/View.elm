@@ -1,7 +1,8 @@
 module Notes.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Attributes exposing (class, placeholder)
+import Html.Events exposing (onInput, onSubmit)
 import Types.Project exposing (Project)
 import Types.Note exposing (Note)
 import Notes.Models exposing (Model)
@@ -37,7 +38,7 @@ header maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "notes-header bg-primary text-light ph3 pv3" ]
+        div [ class "notes-header bg-primary text-light ph4 pv3" ]
             [ sidebarToggle ToggleSidebar
             , h1 [ class "f3 mv0" ] [ text projectName ]
             ]
@@ -45,9 +46,9 @@ header maybeSelectedProject =
 
 notesContent : Project -> Model -> Html Msg
 notesContent project model =
-    div [ class "notes-content flex col" ]
+    div [ class "notes-content flex col sb" ]
         [ notesList project.notes
-        , messageBox model
+        , messageBox model.noteText
         ]
 
 
@@ -98,7 +99,17 @@ noteView note =
         [ text note.text ]
 
 
-messageBox : Model -> Html Msg
-messageBox model =
+messageBox : String -> Html Msg
+messageBox noteText =
     div [ class "notes-messageBox" ]
-        [ textarea [ placeholder "Write anything...", class "w-100 h-100 pa4 mono" ] [] ]
+        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex col" ]
+            [ textarea
+                [ placeholder "Write anything..."
+                , class "w-100 h-100 pa4 mono"
+                , onInput ChangeNoteText
+                ]
+                [ text noteText
+                ]
+            , button [ class "button button--noRadius" ] [ text "Create!" ]
+            ]
+        ]

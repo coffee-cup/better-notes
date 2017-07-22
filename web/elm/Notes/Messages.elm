@@ -3,4 +3,6 @@ module Notes.Messages exposing (..)
 
 type Msg
     = ToggleSidebar
-    | NoOp
+    | ClearNoteText
+    | ChangeNoteText String
+    | CreateNote String
