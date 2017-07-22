@@ -63,6 +63,10 @@
     &-content {
       transition: filter .250s ease-out;
     }
+
+    &-header h1 {
+      transition: filter .250s ease-out;
+    }
   }
 
   // Styles for when the sidebar is open
@@ -80,6 +84,10 @@
 
         &-content {
           filter: blur(4px);
+        }
+
+        &-header h1 {
+          filter: blur(14px);
         }
       }
 
