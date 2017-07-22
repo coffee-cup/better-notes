@@ -104,14 +104,6 @@
   white-space: pre;
 }
 
-.gutter-small {
-  @include break(xsmall) {
-    max-width: 100%;
-    padding-right: $side-padding-small;
-    padding-left: $side-padding-small;
-  }
-}
-
 .vh {
   height: 100vh;
   max-height: 100vh;
@@ -182,14 +174,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.vertical-center-not-small {
-  @include break(not-small) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  &-not-small {
+    @include min-screen($xsmall) {
+      display: block;
+    }
   }
 }
 

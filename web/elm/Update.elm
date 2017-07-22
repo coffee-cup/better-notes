@@ -290,6 +290,9 @@ handleSidebarMsg msg model =
         Sidebar.Messages.SelectProject project ->
             ( model, changePage (NotesProjectRoute project.name) )
 
+        Sidebar.Messages.ToggleSidebar ->
+            ( { model | sidebarOpen = not model.sidebarOpen }, Cmd.none )
+
         _ ->
             let
                 ( newSidebarModel, newSidebarMsg ) =

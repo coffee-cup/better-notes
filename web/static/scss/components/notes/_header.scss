@@ -3,15 +3,5 @@
   align-items: center;
   flex-grow: 0;
 
-  .toggle-sidebar {
-    display: inline-block;
-    margin-right: 2rem;
-    padding-top: .2rem;
-    color: $text-dark;
-    opacity: 0.5;
-
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
+  min-height: 4rem;
 }

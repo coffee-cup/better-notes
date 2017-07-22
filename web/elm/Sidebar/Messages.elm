@@ -9,3 +9,4 @@ type Msg
     | CreateProject String
     | DeleteProject Project
     | SelectProject Project
+    | ToggleSidebar

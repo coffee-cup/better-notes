@@ -2,11 +2,11 @@ module Notes.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
 import Types.Project exposing (Project)
 import Types.Note exposing (Note)
 import Notes.Models exposing (Model)
 import Notes.Messages exposing (..)
+import ViewUtils exposing (..)
 
 
 view : Maybe Project -> Model -> Html Msg
@@ -38,7 +38,7 @@ header maybeSelectedProject =
                     ""
     in
         div [ class "notes-header bg-primary text-light ph3 pv3" ]
-            [ span [ class "toggle-sidebar", onClick ToggleSidebar ] [ text "X" ]
+            [ sidebarToggle ToggleSidebar
             , h1 [ class "f3 mv0" ] [ text projectName ]
             ]
 
@@ -73,8 +73,10 @@ notesList notes =
                 _ ->
                     populatedNotesList notes
     in
-        div [ class "notes-list measure-wide lh-copy pa4 fg1" ]
-            [ notesView
+        div [ class "notes-list-wrapper" ]
+            [ div [ class "notes-list measure-wide lh-copy pa4 fg1" ]
+                [ notesView
+                ]
             ]
 
 

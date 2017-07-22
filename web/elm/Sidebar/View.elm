@@ -6,14 +6,23 @@ import Html.Events exposing (onClick, onInput, onSubmit)
 import Types.Project exposing (Project)
 import Sidebar.Messages exposing (Msg(..))
 import Sidebar.Models exposing (Model)
+import ViewUtils exposing (..)
 
 
 view : List Project -> Maybe Project -> Model -> Html Msg
 view projects maybeSelectedProject model =
     div [ class "sidebar pv4 flex col" ]
-        [ h1 [ class "f3 mv2 bold" ] [ text "Better Notes" ]
+        [ header
         , projectList projects maybeSelectedProject
         , createProject model.newProjectName
+        ]
+
+
+header : Html Msg
+header =
+    div [ class "sidebar-header" ]
+        [ h1 [ class "f3 mv2 bold" ] [ text "Better Notes" ]
+        , sidebarToggle ToggleSidebar
         ]
 
 

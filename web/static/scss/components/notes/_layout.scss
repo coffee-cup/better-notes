@@ -1,16 +1,17 @@
 :root {
-  --sidebar-width: 20%;
+  --sidebar-max-width: 16rem;
+  --sidebar-width: 30%;
 
-  @include break(xsmall) {
-    --sidebar-width: 90%;
-  }
-
-  @include break(small) {
+  @include min-screen($xsmall) {
     --sidebar-width: 80%;
   }
 
-  @include break(medium) {
-    --sidebar-width: 30%;
+  @include min-screen($small) {
+    --sidebar-width: 40%;
+  }
+
+  @include min-screen($medium) {
+    --sidebar-width: var(--sidebar-max-width);
   }
 }
 
@@ -18,7 +19,7 @@
   position: relative;
   min-height: 100vh;
   max-height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
 
   .notes,
   .sidebar {
@@ -33,24 +34,72 @@
     top: 0;
     bottom: 0;
     width: var(--sidebar-width);
-    max-width: 30rem;
+
+    @include max-screen($small) {
+      left: calc(-1 * var(--sidebar-width));
+    }
+
+    .toggle-sidebar {
+      color: $text-light;
+      font-size: 1.5rem;
+
+      @include min-screen($small) {
+        display: none;
+      }
+    }
   }
 
   .notes {
+    display: flex;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 1;
-
-    display: flex;
+    overflow: hidden;
     flex-direction: column;
-  }
 
-  &.sidebar-open {
-    .notes {
-      left: var(--sidebar-width);
+    &-content {
+      transition: filter .250s ease-out;
     }
   }
+
+  // Styles for when the sidebar is open
+  &.sidebar-open {
+    .sidebar {
+      left: 0;
+      animation: index-up 1s ease-out;
+    }
+
+    .notes {
+      left: var(--sidebar-width);
+
+      @include max-screen($small) {
+        right: calc(-1 * var(--sidebar-width));
+
+        &-content {
+          filter: blur(4px);
+        }
+      }
+
+      .toggle-sidebar {
+        @include max-screen($small) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.toggle-sidebar {
+  display: inline-block;
+  margin-right: 2rem;
+  padding-top: .2rem;
+  opacity: 0.5;
+  color: $text-dark;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
 }

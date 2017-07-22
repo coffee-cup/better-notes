@@ -5,6 +5,12 @@
   color: $text-light;
   background-color: $darkgray;
 
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .create-project {
     input {
       border-top-right-radius: 0;

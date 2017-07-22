@@ -2,6 +2,7 @@ module ViewUtils exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 
 
 headingHuge : String -> Html msg
@@ -27,3 +28,8 @@ heart =
 gutter : String
 gutter =
     "ph6-ns ph4-m ph3"
+
+
+sidebarToggle : msg -> Html msg
+sidebarToggle msg =
+    span [ class "toggle-sidebar", onClick msg ] [ text "X" ]

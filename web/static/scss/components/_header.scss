@@ -4,12 +4,4 @@
 
 .f-huge {
   font-size: 8rem;
-
-  @include break(medium) {
-    font-size: 6rem;
-  }
-
-  @include break(small) {
-    font-size: 4rem;
-  }
 }

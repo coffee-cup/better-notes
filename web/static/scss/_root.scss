@@ -5,9 +5,7 @@ p {
 
 a {
   color: $text-dark;
-
   text-decoration: none;
-
   cursor: pointer;
   transition: .250s ease-in-out;
 
@@ -20,21 +18,17 @@ a {
 a.none {
   background: none;
   text-shadow: none;
-
   text-decoration: none;
 }
 
 ul.none {
   padding-left: 0;
-
   list-style-type: none;
 }
 
 .page {
   display: flex;
   flex-direction: column;
-
   min-height: 100vh;
-
   justify-content: space-between;
 }
