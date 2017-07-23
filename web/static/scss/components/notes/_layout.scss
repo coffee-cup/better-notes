@@ -82,7 +82,11 @@
       @include max-screen($small) {
         right: calc(-1 * var(--sidebar-width));
 
-        &-content {
+        &-list-wrapper {
+          filter: blur(4px);
+        }
+
+        .ace_content {
           filter: blur(4px);
         }
 
