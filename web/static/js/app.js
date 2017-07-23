@@ -32,9 +32,14 @@ app.ports.saveToken.subscribe(token => {
 });
 
 app.ports.scrollToBottom.subscribe(() => {
-  // Short delay so new note has been added to the DOM
-  setTimeout(() => {
+  const toBottom = () => {
     const notesList = document.querySelector('.notes-list-wrapper');
+    if (!notesList) {
+      setTimeout(toBottom, 50);
+      return;
+    }
     notesList.scrollTop = notesList.scrollHeight;
-  }, 100);
+  };
+
+  setTimeout(toBottom, 120);
 });

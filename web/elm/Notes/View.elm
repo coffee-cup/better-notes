@@ -116,6 +116,7 @@ messageBox noteText =
                 , Ace.enableSnippets True
                 , Ace.extensions [ "language_tools", "static_highlight", "spellcheck" ]
                 , Ace.onSourceChange ChangeNoteText
+                , Ace.onShiftEnter (CreateNote noteText)
                 , Ace.value noteText
                 ]
                 []

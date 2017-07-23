@@ -170,6 +170,16 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
     // To resize automatically
     editor.setAutoScrollEditorIntoView(false);
 
+    // Keybindings
+    editor.commands.addCommand({
+      name: 'shift+enter',
+      exec: () => {
+        var event = new Event('AceShiftEnter');
+        div.dispatchEvent(event);
+      },
+      bindKey: { mac: 'shift+enter', win: 'shift+enter' }
+    });
+
     var changer = function(_val) {
       var new_source = editor.getSession().getValue();
       div.value = new_source;

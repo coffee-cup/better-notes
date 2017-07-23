@@ -18,6 +18,7 @@ module Ace exposing (..)
 # Ace's Events
 
 @docs onSourceChange
+@docs onShiftEnter
 
 -}
 
@@ -167,6 +168,16 @@ extensions exts =
 onSourceChange : (String -> msg) -> Attribute msg
 onSourceChange tagger =
     Events.on "AceSourceChange" (JD.map tagger Events.targetValue)
+
+
+{-| Shift+Enter changes listener.
+
+    Ace.toHtml [ Ace.onShiftEnter msg ] []
+
+-}
+onShiftEnter : msg -> Attribute msg
+onShiftEnter message =
+    Events.on "AceShiftEnter" (JD.succeed message)
 
 
 {-| Creates `Html` instance with Ace attached to it.
