@@ -3,6 +3,7 @@ module Notes.View exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class, placeholder)
 import Html.Events exposing (onInput, onSubmit)
+import Ace
 import Types.Project exposing (Project)
 import Types.Note exposing (Note)
 import Notes.Models exposing (Model)
@@ -102,14 +103,38 @@ noteView note =
 messageBox : String -> Html Msg
 messageBox noteText =
     div [ class "notes-messageBox" ]
-        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex col" ]
-            [ textarea
-                [ placeholder "Write anything..."
-                , class "w-100 h-100 pa4 mono"
-                , onInput ChangeNoteText
+        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex" ]
+            [ Ace.toHtml
+                [ Ace.theme "tomorrow_night_eighties"
+                , Ace.mode "markdown"
+                , Ace.showGutter False
+                , Ace.highlightActiveLine False
+                , Ace.useSoftTabs True
+                , Ace.enableBasicAutocompletion True
+                , Ace.enableLiveAutocompletion True
+                , Ace.enableSnippets True
+                , Ace.extensions [ "language_tools", "static_highlight", "spellcheck" ]
+                , Ace.onSourceChange ChangeNoteText
+                , Ace.value noteText
                 ]
-                [ text noteText
-                ]
-            , button [ class "button button--noRadius" ] [ text "Create!" ]
+                []
+            , button [ class "notes-createButton button button--noRadius" ] [ text "Create!" ]
             ]
         ]
+
+
+
+--messageBox : String -> Html Msg
+--messageBox noteText =
+--    div [ class "notes-messageBox" ]
+--        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex" ]
+--            [ textarea
+--                [ placeholder "Write anything..."
+--                , class "w-100 h-100 pa4 mono"
+--                , onInput ChangeNoteText
+--                ]
+--                [ text noteText
+--                ]
+--            , button [ class "notes-createButton button button--noRadius" ] [ text "Create!" ]
+--            ]
+--        ]

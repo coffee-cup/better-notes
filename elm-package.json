@@ -1,12 +1,11 @@
 {
     "version": "1.0.0",
     "summary": "helpful summary of your project, less than 80 characters",
-    "repository": "https://github.com/user/project.git",
+    "repository": "https://github.com/coffee-cup/better-notes.git",
     "license": "BSD3",
-    "source-directories": [
-        "web/elm"
-    ],
-    "exposed-modules": [],
+    "source-directories": ["web/elm"],
+    "exposed-modules": ["Ace"],
+    "native-modules": true,
     "dependencies": {
         "Bogdanp/elm-route": "4.0.0 <= v < 5.0.0",
         "elm-community/json-extra": "2.3.0 <= v < 3.0.0",

@@ -10,6 +10,11 @@
     height: 16rem;
     border-top: solid 1px $lightgray;
 
+    .notes-createButton {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
     @include max-screen-height(700px) {
       height: 10rem;
     }
