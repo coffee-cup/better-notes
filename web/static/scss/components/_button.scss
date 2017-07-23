@@ -4,7 +4,7 @@
   padding: .5rem;
 
   color: $text-light;
-  background: $primary-colour;
+  background-color: $primary-colour;
   text-shadow: none;
 
   font-size: .9rem;
@@ -17,10 +17,6 @@
   cursor: pointer;
   transition: transform .250s ease-out;
 
-  &--noRadius {
-    border-radius: 0;
-  }
-
   &:hover {
     transform: scale(1.05);
     opacity: 1;
@@ -28,5 +24,23 @@
 
   &:active {
     transform: scale(1.02);
+  }
+
+  &--noRadius {
+    border-radius: 0;
+  }
+
+  &--greenHover {
+    transition: background-color .250s ease-out;
+
+    &:hover {
+      transform: scale(1);
+      background-color: $green;
+    }
+
+    &:active {
+      transform: scale(1);
+      background-color: lighten($green, 20%);
+    }
   }
 }

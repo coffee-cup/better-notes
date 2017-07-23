@@ -34,8 +34,6 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
-    <link rel="stylesheet" href="<%= static_path(@conn, "/app.css") %>">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-static_highlight.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ext-language_tools.js"></script>
@@ -43,6 +41,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/mode-markdown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/snippets/markdown.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/theme-tomorrow_night_eighties.js"></script>
+
+    <link rel="stylesheet" href="<%= static_path(@conn, "/app.css") %>">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700" rel="stylesheet">
   </head>
 
   <body>

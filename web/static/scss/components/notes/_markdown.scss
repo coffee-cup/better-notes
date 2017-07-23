@@ -1,6 +1,14 @@
 // These are the styles for the rendered markdown
 
 .markdown {
+  font-family: $serif;
+
+  h1,
+  h2,
+  h3 {
+    font-family: $sans;
+  }
+
   > :first-child {
     margin-top: 0;
   }

@@ -77,7 +77,7 @@ notesList notes =
                     populatedNotesList notes
     in
         div [ class "notes-list-wrapper" ]
-            [ div [ class "notes-list measure-wide lh-copy mh4 fg1" ]
+            [ div [ class "notes-list lh-copy mh4 fg1" ]
                 [ notesView
                 ]
             ]
@@ -119,6 +119,9 @@ messageBox noteText =
                 , Ace.value noteText
                 ]
                 []
-            , button [ class "notes-createButton button button--noRadius" ] [ text "Create!" ]
+            , button
+                [ class "notes-createButton button button--noRadius button--greenHover"
+                ]
+                [ text "Create!" ]
             ]
         ]

@@ -149,8 +149,11 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
       enableSnippets: model.enableSnippets,
       fontSize: '1rem',
       spellcheck: true,
-      scrollPastEnd: 0.5
+      scrollPastEnd: 0.6,
+      wrapBehavioursEnabled: true,
+      wrap: true
     });
+
     if (!model.showCursor)
       editor.renderer.$cursorLayer.element.style.display = 'none';
     editor.getSession().setUseSoftTabs(model.useSoftTabs);
@@ -159,6 +162,10 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
     dummy.shared = shared;
     // It uses editor instance of prev and copy it to new
     diff({ model: dummy }, { model: model });
+
+    // Wrap settings
+    editor.getSession().setUseWrapMode(true);
+    editor.getSession().setWrapLimitRange(80, 80);
 
     // To resize automatically
     editor.setAutoScrollEditorIntoView(false);

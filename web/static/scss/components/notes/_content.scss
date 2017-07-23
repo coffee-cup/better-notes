@@ -5,6 +5,10 @@
     overflow-y: scroll;
   }
 
+  .notes-list {
+    max-width: 46rem;
+  }
+
   .notes-messageBox {
     position: relative;
     height: 16rem;
@@ -13,10 +17,15 @@
     .notes-createButton {
       padding-left: 2rem;
       padding-right: 2rem;
+
+      @include max-screen($small) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
     }
 
     @include max-screen-height(700px) {
-      height: 10rem;
+      height: 8rem;
     }
 
     @include max-screen-height(500px) {

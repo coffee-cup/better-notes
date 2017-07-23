@@ -281,7 +281,10 @@ handleNotesMsg msg model =
                 newCmd =
                     case model.selectedProject of
                         Just project ->
-                            createProjectNote model.token noteText project
+                            if noteText /= "" then
+                                createProjectNote model.token noteText project
+                            else
+                                Cmd.none
 
                         Nothing ->
                             Cmd.none
