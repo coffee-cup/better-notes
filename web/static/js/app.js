@@ -31,13 +31,14 @@ app.ports.saveToken.subscribe(token => {
   localStorage.setItem(tokenKey, token);
 });
 
-app.ports.scrollToBottom.subscribe(() => {
+app.ports.newNotes.subscribe(() => {
   const toBottom = () => {
     const notesList = document.querySelector('.notes-list-wrapper');
     if (!notesList) {
       setTimeout(toBottom, 50);
       return;
     }
+    window.Prism.highlightAll();
     notesList.scrollTop = notesList.scrollHeight;
   };
 

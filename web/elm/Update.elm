@@ -29,7 +29,7 @@ port pageView : String -> Cmd msg
 port saveToken : String -> Cmd msg
 
 
-port scrollToBottom : String -> Cmd msg
+port newNotes : String -> Cmd msg
 
 
 changePage : Sitemap -> Cmd msg
@@ -175,7 +175,7 @@ update msg model =
                 newModel =
                     { model | projects = newProjects }
             in
-                ( { newModel | selectedProject = findSelectedProject newModel }, scrollToBottom "" )
+                ( { newModel | selectedProject = findSelectedProject newModel }, newNotes "" )
 
         OnFetchNotes (Err _) ->
             ( errorModel model "Error fetching notes", Cmd.none )
@@ -289,7 +289,7 @@ handleNotesMsg msg model =
                         Nothing ->
                             Cmd.none
             in
-                ( model, Cmd.batch [ newCmd, (scrollToBottom "") ] )
+                ( model, Cmd.batch [ newCmd, (newNotes "") ] )
 
         _ ->
             let

@@ -15,7 +15,7 @@ defmodule BetterNotes.AuthController do
   def request(_conn, _params) do
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
+  def callback(%{assigns: %{ueberauth_failure: _fails}}, _params) do
     render(ErrorView, "401.json")
   end
 
@@ -38,9 +38,6 @@ defmodule BetterNotes.AuthController do
         {:ok, jwt, _} = Guardian.encode_and_sign(user, :token)
 
         auth_conn = Guardian.Plug.api_sign_in(conn, user)
-        jwt = Guardian.Plug.current_token(auth_conn)
-        {:ok, claims} = Guardian.Plug.claims(auth_conn)
-
         auth_conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> json(%{access_token: jwt}) # Return token to client

@@ -43,6 +43,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/theme-tomorrow_night_eighties.js"></script>
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/prism.css") %>">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700" rel="stylesheet">
   </head>
 
@@ -53,5 +54,6 @@
     </main>
 
     <script src="<%= static_path(@conn, "/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/prism.js") %>"></script>
   </body>
 </html>

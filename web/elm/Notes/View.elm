@@ -3,6 +3,8 @@ module Notes.View exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class, placeholder, property)
 import Html.Events exposing (onInput, onSubmit)
+import Html.Keyed as Keyed
+import Html.Lazy exposing (lazy)
 import Ace
 import Json.Encode as JE
 import Types.Project exposing (Project)
@@ -91,8 +93,14 @@ emptyNotesList =
 
 populatedNotesList : List Note -> Html Msg
 populatedNotesList notes =
-    div [ class "markdown" ]
-        (List.map noteView notes)
+    Keyed.node "div"
+        [ class "markdown" ]
+        (List.map keyedNoteView notes)
+
+
+keyedNoteView : Note -> ( String, Html Msg )
+keyedNoteView note =
+    ( toString note.id, lazy noteView note )
 
 
 noteView : Note -> Html Msg
