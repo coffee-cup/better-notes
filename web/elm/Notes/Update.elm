@@ -2,7 +2,6 @@ module Notes.Update exposing (..)
 
 import Notes.Models exposing (Model)
 import Notes.Messages exposing (Msg(..))
-import Debug
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -12,7 +11,7 @@ update msg model =
             ( { model | noteText = text }, Cmd.none )
 
         ClearNoteText ->
-            ( { model | noteText = (Debug.log "note text" "") }, Cmd.none )
+            ( { model | noteText = "" }, Cmd.none )
 
         _ ->
             ( model, Cmd.none )

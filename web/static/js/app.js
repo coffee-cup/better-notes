@@ -30,3 +30,11 @@ const app = Elm.Main.embed(elmDiv, {
 app.ports.saveToken.subscribe(token => {
   localStorage.setItem(tokenKey, token);
 });
+
+app.ports.scrollToBottom.subscribe(() => {
+  // Short delay so new note has been added to the DOM
+  setTimeout(() => {
+    const notesList = document.querySelector('.notes-list-wrapper');
+    notesList.scrollTop = notesList.scrollHeight;
+  }, 100);
+});
