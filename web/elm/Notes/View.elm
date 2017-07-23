@@ -113,21 +113,25 @@ messageBox : String -> Html Msg
 messageBox noteText =
     div [ class "notes-messageBox" ]
         [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex" ]
-            [ Ace.toHtml
-                [ Ace.theme "tomorrow_night_eighties"
-                , Ace.mode "markdown"
-                , Ace.showGutter False
-                , Ace.highlightActiveLine False
-                , Ace.useSoftTabs True
-                , Ace.enableBasicAutocompletion True
-                , Ace.enableLiveAutocompletion True
-                , Ace.enableSnippets True
-                , Ace.extensions [ "language_tools", "static_highlight", "spellcheck" ]
-                , Ace.onSourceChange ChangeNoteText
-                , Ace.onShiftEnter (CreateNote noteText)
-                , Ace.value noteText
+            [ div [ class "notes-editor fg1" ]
+                [ Ace.toHtml
+                    [ Ace.theme "tomorrow_night_eighties"
+                    , Ace.mode "markdown"
+                    , Ace.showGutter False
+                    , Ace.highlightActiveLine False
+                    , Ace.useSoftTabs True
+                    , Ace.enableBasicAutocompletion True
+                    , Ace.enableLiveAutocompletion True
+                    , Ace.enableSnippets True
+                    , Ace.extensions [ "language_tools", "static_highlight", "spellcheck" ]
+                    , Ace.onSourceChange ChangeNoteText
+                    , Ace.onShiftEnter (CreateNote noteText)
+                    , Ace.value noteText
+                    ]
+                    []
+                , span [ class "notes-editor-hint" ]
+                    [ text "shift+enter to create" ]
                 ]
-                []
             , button
                 [ class "notes-createButton button button--noRadius button--greenHover"
                 ]

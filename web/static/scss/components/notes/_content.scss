@@ -32,4 +32,15 @@
       height: 6rem;
     }
   }
+
+  .notes-editor-hint {
+    position: absolute;
+    left: .25rem;
+    bottom: .25rem;
+    width: 100%;
+    max-width: 48rem;
+    color: rgba($text-light, .6);
+    font-size: 0.8rem;
+    text-align: right;
+  }
 }
