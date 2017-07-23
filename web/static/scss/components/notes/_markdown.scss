@@ -1,0 +1,19 @@
+// These are the styles for the rendered markdown
+
+.markdown {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    word-wrap: break-word;
+  }
+
+  li > p {
+    margin: .5rem 0;
+  }
+}

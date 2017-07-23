@@ -148,7 +148,8 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
       showGutter: model.showGutter,
       enableSnippets: model.enableSnippets,
       fontSize: '1rem',
-      spellcheck: true
+      spellcheck: true,
+      scrollPastEnd: 0.5
     });
     if (!model.showCursor)
       editor.renderer.$cursorLayer.element.style.display = 'none';

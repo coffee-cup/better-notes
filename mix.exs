@@ -42,7 +42,8 @@ defmodule BetterNotes.Mixfile do
      {:guardian, "~> 0.14.2"},
      {:ueberauth, "~> 0.4"},
      {:ueberauth_google, "~> 0.5"},
-     {:comeonin, "~> 3.2"}]
+     {:comeonin, "~> 3.2"},
+     {:earmark, "~> 1.2.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

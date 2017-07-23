@@ -1,9 +1,10 @@
 module Notes.View exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, placeholder)
+import Html.Attributes exposing (class, placeholder, property)
 import Html.Events exposing (onInput, onSubmit)
 import Ace
+import Json.Encode as JE
 import Types.Project exposing (Project)
 import Types.Note exposing (Note)
 import Notes.Models exposing (Model)
@@ -76,7 +77,7 @@ notesList notes =
                     populatedNotesList notes
     in
         div [ class "notes-list-wrapper" ]
-            [ div [ class "notes-list measure-wide lh-copy pa4 fg1" ]
+            [ div [ class "notes-list measure-wide lh-copy mh4 fg1" ]
                 [ notesView
                 ]
             ]
@@ -90,14 +91,14 @@ emptyNotesList =
 
 populatedNotesList : List Note -> Html Msg
 populatedNotesList notes =
-    div []
+    div [ class "markdown" ]
         (List.map noteView notes)
 
 
 noteView : Note -> Html Msg
 noteView note =
-    div [ class "note pv2" ]
-        [ text note.text ]
+    div [ class "note", property "innerHTML" (JE.string note.html) ]
+        []
 
 
 messageBox : String -> Html Msg
@@ -121,20 +122,3 @@ messageBox noteText =
             , button [ class "notes-createButton button button--noRadius" ] [ text "Create!" ]
             ]
         ]
-
-
-
---messageBox : String -> Html Msg
---messageBox noteText =
---    div [ class "notes-messageBox" ]
---        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex" ]
---            [ textarea
---                [ placeholder "Write anything..."
---                , class "w-100 h-100 pa4 mono"
---                , onInput ChangeNoteText
---                ]
---                [ text noteText
---                ]
---            , button [ class "notes-createButton button button--noRadius" ] [ text "Create!" ]
---            ]
---        ]

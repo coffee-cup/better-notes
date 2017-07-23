@@ -1,6 +1,8 @@
 defmodule BetterNotes.Note do
   use BetterNotes.Web, :model
 
+  alias BetterNotes.Parser.Markdown
+
   schema "notes" do
     field :text, :string
     field :html, :string
@@ -15,7 +17,8 @@ defmodule BetterNotes.Note do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:text, :html])
-    |> validate_required([:text])
     |> foreign_key_constraint(:project_id)
+    |> put_change(:html, Markdown.to_html(params["text"]))
+    |> validate_required([:text, :html])
   end
 end

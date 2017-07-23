@@ -9,6 +9,7 @@ type alias Note =
     { id : Int
     , projectId : Int
     , text : String
+    , html : String
     }
 
 
@@ -23,6 +24,7 @@ decodeNote =
         |: (field "id" int)
         |: (field "project_id" int)
         |: (field "text" string)
+        |: (field "html" string)
 
 
 encodeNewNote : String -> Int -> JE.Value
