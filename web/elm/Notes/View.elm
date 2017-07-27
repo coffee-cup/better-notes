@@ -42,10 +42,10 @@ header maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "notes-header ph4 pv2" ]
+        div [ class "notes-header ph4-ns ph2 pv2" ]
             [ sidebarToggle ToggleSidebar
             , div [ class "cont" ]
-                [ p [ class "f4 mv0 mono" ] [ text ("/" ++ projectName) ]
+                [-- p [ class "f4 mv0 mono" ] [ text ("/" ++ projectName) ]
                 ]
             ]
 
@@ -89,8 +89,8 @@ notesList notes =
 
 emptyNotesList : Html Msg
 emptyNotesList =
-    div [ class "notes-list-empty vertical-center" ]
-        [ h2 [] [ text "You have no notes..." ] ]
+    div [ class "notes-list-empty cont" ]
+        [ h2 [] [ text "You have no notes 😞" ] ]
 
 
 populatedNotesList : List Note -> Html Msg
@@ -108,7 +108,7 @@ keyedNoteView note =
 noteView : Note -> Html Msg
 noteView note =
     div [ class "note", property "innerHTML" (JE.string note.html) ]
-        []
+        [ span [ class "note-delete" ] [ text "♻️" ] ]
 
 
 messageBox : String -> Html Msg
