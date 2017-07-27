@@ -198,6 +198,12 @@ update msg model =
         OnCreateNote (Err _) ->
             ( errorModel model "Error creating note", Cmd.none )
 
+        OnDeleteNote (Ok ( projectId, noteId )) ->
+            handleDeleteNote projectId noteId model
+
+        OnDeleteNote (Err _) ->
+            ( errorModel model "Error deleting note", Cmd.none )
+
 
 handleRoute : Model -> ( Model, Cmd Msg )
 handleRoute model =
@@ -291,6 +297,9 @@ handleNotesMsg msg model =
             in
                 ( model, Cmd.batch [ newCmd, (newNotes "") ] )
 
+        Notes.Messages.DeleteNote note ->
+            ( model, deleteProjectNote model.token note )
+
         _ ->
             let
                 ( newNotesModel, newNotesMsg ) =
@@ -349,6 +358,25 @@ handleDeleteProject projectId model =
                     Cmd.none
     in
         ( { model | projects = newProjects }, newCmd )
+
+
+handleDeleteNote : Int -> Int -> Model -> ( Model, Cmd Msg )
+handleDeleteNote projectId noteId model =
+    let
+        newProjects =
+            List.map
+                (\p ->
+                    if projectId == p.id then
+                        { p | notes = (List.filter (\n -> n.id /= noteId) p.notes) }
+                    else
+                        p
+                )
+                model.projects
+
+        newModel =
+            { model | projects = newProjects }
+    in
+        ( { newModel | selectedProject = findSelectedProject newModel }, Cmd.none )
 
 
 errorModel : Model -> String -> Model

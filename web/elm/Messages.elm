@@ -29,3 +29,4 @@ type Msg
     | OnDeleteProject (Result Http.Error Int)
     | OnFetchNotes (Result Http.Error (List Note))
     | OnCreateNote (Result Http.Error Note)
+    | OnDeleteNote (Result Http.Error ( Int, Int ))

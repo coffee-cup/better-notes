@@ -8,6 +8,7 @@ module Api
         , deleteProject
         , getProjectNotes
         , createProjectNote
+        , deleteProjectNote
         )
 
 import Http
@@ -46,6 +47,7 @@ type Route
     | Projects
     | DeleteProject Project
     | Notes Project
+    | DeleteNote Note
 
 
 type alias Token =
@@ -119,6 +121,12 @@ createProjectNote token text project =
             postRequest token (Notes project) body decodeNote
     in
         request |> Http.send OnCreateNote
+
+
+deleteProjectNote : Token -> Note -> Cmd Msg
+deleteProjectNote token note =
+    (deleteRequest token (DeleteNote note) ( note.projectId, note.id ))
+        |> Http.send OnDeleteNote
 
 
 apiUrl : String -> String
@@ -210,3 +218,6 @@ routeToString route =
 
         Notes project ->
             "/projects/" ++ (toString project.id) ++ "/notes"
+
+        DeleteNote note ->
+            "/projects/" ++ (toString note.projectId) ++ "/notes/" ++ (toString note.id)

@@ -2,7 +2,7 @@ module Notes.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, placeholder, property)
-import Html.Events exposing (onInput, onSubmit)
+import Html.Events exposing (onInput, onSubmit, onClick)
 import Html.Keyed as Keyed
 import Html.Lazy exposing (lazy)
 import Ace
@@ -108,7 +108,7 @@ keyedNoteView note =
 noteView : Note -> Html Msg
 noteView note =
     div [ class "note", property "innerHTML" (JE.string note.html) ]
-        [ span [ class "note-delete" ] [ text "♻️" ] ]
+        [ span [ onClick (DeleteNote note), class "note-delete" ] [ text "♻️" ] ]
 
 
 messageBox : String -> Html Msg
