@@ -33,14 +33,15 @@ app.ports.saveToken.subscribe(token => {
 
 app.ports.newNotes.subscribe(() => {
   const toBottom = () => {
-    const notesList = document.querySelector('.notes-list-wrapper');
-    if (!notesList) {
-      setTimeout(toBottom, 50);
-      return;
-    }
-    window.Prism.highlightAll();
-    notesList.scrollTop = notesList.scrollHeight;
+    window.requestAnimationFrame(() => {
+      const notesList = document.querySelector('.notes-list-wrapper');
+      if (!notesList) {
+        setTimeout(toBottom, 50);
+        return;
+      }
+      window.Prism.highlightAll();
+      notesList.scrollTop = notesList.scrollHeight;
+    });
   };
-
-  setTimeout(toBottom, 120);
+  setTimeout(toBottom, 50);
 });
