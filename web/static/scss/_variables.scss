@@ -7,17 +7,19 @@ $lightblue: #3fafff;
 $red: #e7040f;
 $beige: #fdf6e3;
 $purple: #5e2bff;
-$green: #15b21f;
+$green: #19d626;
 
 $primary-colour: $purple;
 $secondary-colour: $green;
 $accent-colour: $red;
-$background-colour: #f4f4f4;
+$background-colour: white;
+$light-colour: rgba($green, .1);
 
 $text-dark: $darkgray;
 $text-light: $white;
 
 $selection: #aba7e8;
+$notes-hover: #e6e6e6;
 
 $base-font-size: 18px;
 $base-line-height: 1.6;
@@ -35,4 +37,5 @@ $gutter: 1rem;
 
 :root {
   --gutter: $gutter;
+  --m-width: 46rem;
 }

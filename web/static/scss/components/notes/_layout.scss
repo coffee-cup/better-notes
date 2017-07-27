@@ -1,13 +1,13 @@
 :root {
   --sidebar-max-width: 16rem;
-  --sidebar-width: 30%;
+  --sidebar-width: 40%;
 
-  @include min-screen($xsmall) {
+  @include max-screen($small) {
     --sidebar-width: 80%;
   }
 
-  @include min-screen($small) {
-    --sidebar-width: 40%;
+  @include max-screen($xsmall) {
+    --sidebar-width: 80%;
   }
 
   @include min-screen($medium) {
@@ -40,7 +40,7 @@
     }
 
     .toggle-sidebar {
-      color: $text-light;
+      color: $secondary-colour;
       font-size: 1.5rem;
 
       @include min-screen($small) {
@@ -111,7 +111,7 @@
   opacity: 0.5;
   color: $text-dark;
 
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
 }

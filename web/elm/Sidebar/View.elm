@@ -21,8 +21,7 @@ view projects maybeSelectedProject model =
 header : Html Msg
 header =
     div [ class "sidebar-header" ]
-        [ h1 [ class "f3 mv2 bold" ] [ text "Better Notes" ]
-        , sidebarToggle ToggleSidebar
+        [ sidebarToggle ToggleSidebar
         ]
 
 
@@ -37,17 +36,19 @@ projectList projects maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "project-list fg1 mt4" ]
-            ([ p [ class "f6 o-50" ] [ text "projects" ] ]
-                ++ (List.map (\p -> projectView p (p.name == selectedProjectName)) projects)
-            )
+        div [ class "project-list fg1 flex col jc mt0 ph4-ns ph2" ]
+            [ div []
+                ([ p [ class "f5 mono" ] [ text "projects" ] ]
+                    ++ (List.map (\p -> projectView p (p.name == selectedProjectName)) projects)
+                )
+            ]
 
 
 projectView : Project -> Bool -> Html Msg
 projectView project selected =
     div [ classList [ ( "project", True ), ( "selected", selected ) ] ]
         [ p [ class "flex" ]
-            [ span [ onClick (SelectProject project), class "fg1 dim pointer" ] [ text project.name ]
+            [ span [ onClick (SelectProject project), class "fg1 dim pointer b" ] [ text project.name ]
             , span [ onClick (DeleteProject project), class "project-delete pr2 f6 pointer" ] [ text "♻️" ]
             ]
         ]
@@ -55,13 +56,13 @@ projectView project selected =
 
 createProject : String -> Html Msg
 createProject projectName =
-    div [ class "create-project" ]
+    div [ class "create-project ph2" ]
         [ form [ onSubmit (CreateProject projectName), class "flex" ]
             [ input
                 [ placeholder "Project name"
                 , onInput SetNewProjectName
                 , value projectName
-                , class "bnone"
+                , class "f6 mono"
                 ]
                 []
             , button [ class "button" ] [ text "Create" ]

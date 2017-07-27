@@ -117,12 +117,6 @@
   display: none;
 }
 
-.cont {
-  max-width: 1000px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
 .img-center {
   display: block;
 
@@ -132,6 +126,12 @@
 .mw100 {
   width: 100%;
   max-width: 100%;
+}
+
+.cont {
+  max-width: var(--m-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fit {
@@ -235,6 +235,10 @@
 
 .cv {
   align-items: center;
+}
+
+.jc {
+  justify-content: center;
 }
 
 .col {

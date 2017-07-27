@@ -42,9 +42,11 @@ header maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "notes-header bg-primary text-light ph4 pv3" ]
+        div [ class "notes-header ph4 pv1" ]
             [ sidebarToggle ToggleSidebar
-            , h1 [ class "f3 mv0" ] [ text projectName ]
+            , div [ class "cont" ]
+                [ p [ class "f4 mv0 mono" ] [ text ("/" ++ projectName) ]
+                ]
             ]
 
 
@@ -79,7 +81,7 @@ notesList notes =
                     populatedNotesList notes
     in
         div [ class "notes-list-wrapper" ]
-            [ div [ class "notes-list lh-copy mh4 fg1" ]
+            [ div [ class "notes-list lh-copy mh4-ns mh2 fg1" ]
                 [ notesView
                 ]
             ]
@@ -94,7 +96,7 @@ emptyNotesList =
 populatedNotesList : List Note -> Html Msg
 populatedNotesList notes =
     Keyed.node "div"
-        [ class "markdown" ]
+        [ class "markdown cont" ]
         (List.map keyedNoteView notes)
 
 
@@ -112,10 +114,10 @@ noteView note =
 messageBox : String -> Html Msg
 messageBox noteText =
     div [ class "notes-messageBox" ]
-        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex" ]
-            [ div [ class "notes-editor fg1" ]
+        [ form [ onSubmit (CreateNote noteText), class "fg1 h-100 flex cont" ]
+            [ div [ class "notes-editor fg1 relative" ]
                 [ Ace.toHtml
-                    [ Ace.theme "tomorrow_night_eighties"
+                    [ Ace.theme "github"
                     , Ace.mode "markdown"
                     , Ace.showGutter False
                     , Ace.highlightActiveLine False
@@ -132,9 +134,10 @@ messageBox noteText =
                 , span [ class "notes-editor-hint" ]
                     [ text "shift+enter to create" ]
                 ]
-            , button
-                [ class "notes-createButton button button--noRadius button--greenHover"
-                ]
-                [ text "Create!" ]
+
+            --, button
+            --    [ class "notes-createButton button button--noRadius button--greenHover"
+            --    ]
+            --    [ text "🗣" ]
             ]
         ]
