@@ -165,7 +165,7 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
 
     // Wrap settings
     editor.getSession().setUseWrapMode(true);
-    editor.getSession().setWrapLimitRange(80, 80);
+    // editor.getSession().setWrapLimitRange(80, 80);
 
     // To resize automatically
     editor.setAutoScrollEditorIntoView(false);

@@ -42,7 +42,7 @@ header maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "notes-header ph4 pv1" ]
+        div [ class "notes-header ph4 pv2" ]
             [ sidebarToggle ToggleSidebar
             , div [ class "cont" ]
                 [ p [ class "f4 mv0 mono" ] [ text ("/" ++ projectName) ]

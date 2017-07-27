@@ -36,7 +36,7 @@ projectList projects maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "project-list fg1 flex col jc mt0 ph4-ns ph2" ]
+        div [ class "project-list fg1 flex col jc mt0 ph4" ]
             [ div []
                 ([ p [ class "f5 mono" ] [ text "projects" ] ]
                     ++ (List.map (\p -> projectView p (p.name == selectedProjectName)) projects)
