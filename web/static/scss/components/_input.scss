@@ -1,0 +1,19 @@
+input,
+.input {
+  width: 100%;
+
+  border: solid 1px $primary-colour;
+  border-radius: $bradius;
+
+  font-size: 1.1rem;
+
+  &.bnone {
+    border: none;
+  }
+
+  &--darkLight {
+    border: none;
+    // border-color: rgba($text-dark, .5);
+    background-color: $sidebar-colour;
+  }
+}

@@ -43,4 +43,19 @@
       background-color: lighten($green, 20%);
     }
   }
+
+  &--greenLight {
+    background-color: $sidebar-colour;
+    transition: background-color .250s ease-out;
+
+    &:hover {
+      transform: scale(1);
+      background-color: rgba($sidebar-colour, .5);
+    }
+
+    &:active {
+      transform: scale(1);
+      background-color: lighten($sidebar-colour, 20%);
+    }
+  }
 }

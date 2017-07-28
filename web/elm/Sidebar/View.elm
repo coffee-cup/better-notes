@@ -11,7 +11,7 @@ import ViewUtils exposing (..)
 
 view : List Project -> Maybe Project -> Model -> Html Msg
 view projects maybeSelectedProject model =
-    div [ class "sidebar pv4 flex col" ]
+    div [ class "sidebar pv4 flex col jc" ]
         [ header
         , projectList projects maybeSelectedProject
         , createProject model.newProjectName
@@ -36,7 +36,7 @@ projectList projects maybeSelectedProject =
                 Nothing ->
                     ""
     in
-        div [ class "project-list fg1 flex col jc mt0 ph4" ]
+        div [ class "project-list flex col jc mt0 ph4" ]
             [ div []
                 ([ p [ class "f5 mono" ] [ text "projects" ] ]
                     ++ (List.map (\p -> projectView p (p.name == selectedProjectName)) projects)
@@ -56,15 +56,15 @@ projectView project selected =
 
 createProject : String -> Html Msg
 createProject projectName =
-    div [ class "create-project ph2" ]
+    div [ class "create-project ph4" ]
         [ form [ onSubmit (CreateProject projectName), class "flex" ]
             [ input
-                [ placeholder "Project name"
+                [ placeholder "project"
                 , onInput SetNewProjectName
                 , value projectName
-                , class "f6 mono"
+                , class "input--darkLight f5 mono"
                 ]
                 []
-            , button [ class "button" ] [ text "Create" ]
+            , button [ class "button--greenLight" ] [ text "👍" ]
             ]
         ]

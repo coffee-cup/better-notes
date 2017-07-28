@@ -1,6 +1,6 @@
 .sidebar {
   position: relative;
-  background-color: rgba($light-colour, .1);
+  background-color: $sidebar-colour;
 
   &-header {
     display: flex;
