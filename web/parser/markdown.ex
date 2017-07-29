@@ -3,7 +3,7 @@ defmodule BetterNotes.Parser.Markdown do
   @doc """
   Converts markdown text to an html string
   """
-  def to_html(text) do
+  def to_html(text) when is_binary(text) do
     options = %Earmark.Options{
       code_class_prefix: "lang- language-",
       gfm: true,
@@ -15,5 +15,6 @@ defmodule BetterNotes.Parser.Markdown do
       {:error, _, _} -> ""
     end
   end
+  def to_html(text), do: nil
 
 end

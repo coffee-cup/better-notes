@@ -1,25 +1,18 @@
 module Messages exposing (..)
 
-import Phoenix.Socket
 import Navigation exposing (Location)
-import Json.Encode as JE
 import Http
 import Types.User exposing (User)
 import Types.Project exposing (Project)
 import Types.Note exposing (Note)
-import Chat.Messages
 import Notes.Messages
 import Sidebar.Messages
 
 
 type Msg
     = OnLocationChange Location
-    | ChatMsg Chat.Messages.Msg
     | NotesMsg Notes.Messages.Msg
     | SidebarMsg Sidebar.Messages.Msg
-    | JoinChannel
-    | PhoenixMsg (Phoenix.Socket.Msg Msg)
-    | ReceiveChatMessage JE.Value
     | ShowHome
     | ShowAbout
     | OnFetchLogin (Result Http.Error String)

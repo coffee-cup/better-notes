@@ -2,7 +2,7 @@ defmodule BetterNotes.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", BetterNotes.RoomChannel
+  # channel "room:*", BetterNotes.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
@@ -21,8 +21,6 @@ defmodule BetterNotes.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
-    IO.puts "connect -----"
-    IO.inspect params
     {:ok, assign(socket, :user, params["username"])}
   end
 

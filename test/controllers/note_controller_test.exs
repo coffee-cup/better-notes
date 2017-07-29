@@ -60,7 +60,7 @@ defmodule BetterNotes.NoteControllerTest do
   test "creates and renders resource when data is valid", %{conn: conn, project: project} do
     conn = post conn, note_path(conn, :create, project), @valid_attrs
     assert json_response(conn, 201)["id"]
-    assert Repo.get_by(Note, @valid_attrs)
+    assert Repo.get_by(Note, %{text: Map.get(@valid_attrs, :text)})
   end
 
   test "does not create note if user does not have access", %{conn: conn, project: project} do
@@ -80,7 +80,7 @@ defmodule BetterNotes.NoteControllerTest do
     note = Repo.insert! Note.changeset(%Note{project_id: project.id}, @valid_attrs)
     conn = put conn, note_path(conn, :update, project, note), @valid_attrs
     assert json_response(conn, 200)["id"]
-    assert Repo.get_by(Note, @valid_attrs)
+    assert Repo.get_by(Note, %{text: Map.get(@valid_attrs, :text)})
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, project: project} do

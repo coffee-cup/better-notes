@@ -12,7 +12,6 @@ defmodule BetterNotes do
       supervisor(BetterNotes.Repo, []),
       # Start the endpoint when the application starts
       supervisor(BetterNotes.Endpoint, []),
-      supervisor(BetterNotes.Presence, [])
       # Start your own worker by calling: BetterNotes.Worker.start_link(arg1, arg2, arg3)
       # worker(BetterNotes.Worker, [arg1, arg2, arg3]),
     ]

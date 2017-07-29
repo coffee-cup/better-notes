@@ -18,7 +18,11 @@ defmodule BetterNotes.Note do
     struct
     |> cast(params, [:text, :html])
     |> foreign_key_constraint(:project_id)
-    |> put_change(:html, Markdown.to_html(params["text"]))
+    |> put_change(:html, Markdown.to_html(get_text(params)))
     |> validate_required([:text, :html])
   end
+
+  defp get_text(%{text: text}), do: text
+  defp get_text(%{"text" => text}), do: text
+  defp get_text(%{}), do: nil
 end
