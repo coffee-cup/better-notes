@@ -13,9 +13,9 @@ $primary-colour: $purple;
 $secondary-colour: $green;
 $accent-colour: $red;
 $background-colour: white;
-$light-colour: rgba($green, .1);
-$sidebar-colour: rgba($light-colour, .1);
-$border-colour: rgba($light-colour, .4);
+$light-green: rgba($green, .6);
+$sidebar-colour: rgba($green, .15);
+$border-colour: rgba($green, .4);
 
 $text-dark: $darkgray;
 $text-light: $white;

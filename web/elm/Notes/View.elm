@@ -61,7 +61,7 @@ notesContent project model =
 emptyContent : Html Msg
 emptyContent =
     div [ class "notes-content vertical-center" ]
-        [ div []
+        [ div [ class "mh4-ns mh2" ]
             [ h2 [ class "f1 mv0" ]
                 [ text "No Project Selected" ]
             , p [] [ text "Select or create a project from the sidebar." ]
@@ -134,10 +134,5 @@ messageBox noteText =
                 , span [ class "notes-editor-hint" ]
                     [ text "shift+enter to create" ]
                 ]
-
-            --, button
-            --    [ class "notes-createButton button button--noRadius button--greenHover"
-            --    ]
-            --    [ text "🗣" ]
             ]
         ]

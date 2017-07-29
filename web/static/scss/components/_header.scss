@@ -1,5 +1,12 @@
-.header {
-  border-bottom: solid 4px $primary-colour;
+.box {
+  border: solid 8px $light-green;
+
+  @include max-screen($small) {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .f-huge {

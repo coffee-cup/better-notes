@@ -18,30 +18,27 @@
   transition: transform .250s ease-out;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     opacity: 1;
   }
 
   &:active {
-    transform: scale(1.02);
+    transform: scale(1.01);
   }
 
   &--noRadius {
     border-radius: 0;
   }
 
-  &--greenHover {
-    transition: background-color .250s ease-out;
+  &--large {
+    width: 100%;
+    padding: .7rem 1rem;
+    text-align: center;
+  }
 
-    &:hover {
-      transform: scale(1);
-      background-color: $green;
-    }
-
-    &:active {
-      transform: scale(1);
-      background-color: lighten($green, 20%);
-    }
+  &--green {
+    background-color: $secondary-colour;
+    color: $text-dark;
   }
 
   &--greenLight {

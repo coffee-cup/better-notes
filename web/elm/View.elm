@@ -43,10 +43,9 @@ page model =
 
 header : Model -> Html Msg
 header model =
-    div [ class "header bold" ]
-        [ div []
-            [ headingHuge "Better Notes"
-            ]
+    div [ class "header flex jc col bold" ]
+        [ h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Better" ]
+        , h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Notes" ]
         ]
 
 
@@ -78,11 +77,15 @@ footer =
 
 homeView : Model -> Html Msg
 homeView model =
-    div [ class ("home col full" ++ gutter) ]
-        [ header model
-        , Auth.View.viewLogin model
+    div [ class ("home flex jc ac col full") ]
+        [ div [ class "box flex col ph5-ns ph4 pv4" ]
+            [ h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Better" ]
+            , h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Notes" ]
+            , p [ class "mt0" ] [ text "Talk to yourself note taking." ]
+            , Auth.View.viewLogin model
 
-        --, Html.map ChatMsg (Chat.View.view model.chatModel)
+            --, Html.map ChatMsg (Chat.View.view model.chatModel)
+            ]
         ]
 
 
