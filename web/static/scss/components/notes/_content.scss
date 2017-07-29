@@ -1,5 +1,6 @@
 .notes-content {
   flex-grow: 1;
+  text-rendering: optimizeLegibility;
 
   .notes-list-wrapper {
     overflow-y: scroll;
