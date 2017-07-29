@@ -96,7 +96,7 @@ defmodule BetterNotes.NoteControllerTest do
     refute Repo.get(Note, note.id)
   end
 
-  test "correctly parser text to markdown", %{conn: conn, project: project} do
+  test "correctly parser text to markdown", %{conn: _, project: project} do
     params = %{text: "\# Hello"}
     note = Repo.insert! Note.changeset(%Note{project_id: project.id}, params)
     assert note.html == "<h1>Hello</h1>\n"

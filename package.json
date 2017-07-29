@@ -3,7 +3,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "webpack --watch --progress --color",
-    "build": "NODE_ENV=production MIX_ENV=prod webpack -p --progress"
+    "build": "NODE_ENV=production MIX_ENV=prod webpack -p --progress",
+    "test": "mix test && npm run build"
   },
   "dependencies": {
     "tachyons": "^4.7.4"

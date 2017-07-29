@@ -6,7 +6,7 @@ defmodule BetterNotes.ProjectController do
 
   def index(conn, _params) do
     projects =
-      from(p in Project, where: p.user_id == ^conn.assigns.user_id)
+      from(p in Project, where: p.user_id == ^conn.assigns.user_id, order_by: [asc: :inserted_at])
       |> Repo.all()
     render(conn, "index.json", projects: projects)
   end
