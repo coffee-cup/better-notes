@@ -17,6 +17,8 @@ console.log(
   isProd ? 'Building for Production ⚡️' : 'Building for Development 💃'
 );
 
+console.log(process.env.TEST);
+
 const elmLoader = {
   loader: 'elm-webpack-loader',
   options: {

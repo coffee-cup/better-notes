@@ -2,7 +2,6 @@ module Models exposing (..)
 
 import Routing exposing (Sitemap)
 import Flags exposing (Flags)
-import Messages exposing (Msg(..))
 import Types.User exposing (User)
 import Types.Project exposing (Project)
 import Notes.Models

@@ -173,7 +173,7 @@ var _coffee_cup$better_notes$Native_Ace = (function() {
     // Keybindings
     editor.commands.addCommand({
       name: 'shift+enter',
-      exec: () => {
+      exec: function() {
         var event = new Event('AceShiftEnter');
         div.dispatchEvent(event);
       },
