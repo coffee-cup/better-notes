@@ -95,4 +95,10 @@ defmodule BetterNotes.NoteControllerTest do
     assert response(conn, 204)
     refute Repo.get(Note, note.id)
   end
+
+  test "correctly parser text to markdown", %{conn: conn, project: project} do
+    params = %{text: "\# Hello"}
+    note = Repo.insert! Note.changeset(%Note{project_id: project.id}, params)
+    assert note.html == "<h1>Hello</h1>\n"
+  end
 end
