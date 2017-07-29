@@ -41,14 +41,6 @@ page model =
             notFoundView
 
 
-header : Model -> Html Msg
-header model =
-    div [ class "header flex jc col bold" ]
-        [ h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Better" ]
-        , h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Notes" ]
-        ]
-
-
 apiText : Model -> Html Msg
 apiText model =
     div []
@@ -81,7 +73,7 @@ homeView model =
         [ div [ class "box flex col ph5-ns ph4 pv4" ]
             [ h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Better" ]
             , h1 [ class "f-headline-ns f-subheadline mv0" ] [ text "Notes" ]
-            , p [ class "mt0" ] [ text "Talk to yourself note taking." ]
+            , p [] [ text "Talk to yourself note taking." ]
             , Auth.View.viewLogin model
 
             --, Html.map ChatMsg (Chat.View.view model.chatModel)

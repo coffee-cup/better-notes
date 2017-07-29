@@ -27,7 +27,7 @@ config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, [
       default_scope: "email profile",
-      callback_url: "http://localhost:4000/auth/google/callback"
+      callback_url: System.get_env("GOOGLE_CALLBACK_URL")
     ]}
   ]
 
