@@ -10,8 +10,12 @@ defmodule BetterNotes.NoteController do
 
   def index(conn, %{"project_id" => project_id}) do
     notes =
-      from(n in Note, where: n.project_id == ^project_id, order_by: [asc: :inserted_at])
-      |> Repo.all()
+      from(
+        n in Note,
+        where: n.project_id == ^project_id,
+        order_by: [asc: :inserted_at]
+      ) |> Repo.all()
+    IO.inspect notes
     render(conn, "index.json", notes: notes)
   end
 

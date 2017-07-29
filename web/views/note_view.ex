@@ -13,6 +13,7 @@ defmodule BetterNotes.NoteView do
     %{id: note.id,
       project_id: note.project_id,
       text: note.text,
-      html: note.html}
+      html: note.html,
+      inserted_at: note.inserted_at}
   end
 end

@@ -9,7 +9,7 @@ defmodule BetterNotes.Repo.Migrations.CreateUser do
       add :last_name, :string
       add :avatar, :string
 
-      timestamps()
+      timestamps(type: :utc_datetime)
     end
 
     create index(:users, [:email], unique: true)
