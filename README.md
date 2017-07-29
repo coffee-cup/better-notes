@@ -1,6 +1,8 @@
-# elm-phoenix-template
+# Better Notes
 
-This is a simple webserver using [Elixir Phoenix](http://www.phoenixframework.org/) and [Elm](http://elm-lang.org). [Here is an example of the result](https://elm-phoenix-template.herokuapp.com/).
+[![Build Status](https://travis-ci.com/coffee-cup/better-notes.svg?token=DF2fqhqgEvTdkEfysVsS&branch=master)](https://travis-ci.com/coffee-cup/better-notes)
+
+Talk to yourself note taking.
 
 ## Features 💥
 
@@ -49,7 +51,6 @@ This template is setup to deploy to Heroku.
 ```
 heroku create
 heroku config:set SECRET_KEY_BASE=$(mix phoenix.gen.secret)
-heroku config:set WEBSOCKET_URL="wss://YOUR-HEROKU-APP.herokuapp.com/socket/websocket"
 heroku addons:create heroku-postgresql:hobby-dev
 heroku buildpacks:set https://github.com/gjaldon/phoenix-static-buildpack
 heroku buildpacks:add --index 1 https://github.com/HashNuke/heroku-buildpack-elixir
