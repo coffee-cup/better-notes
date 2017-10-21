@@ -4,4 +4,4 @@
 
 Talk to yourself note taking.
 
-Find the beta [over here](https://better-notes.herokuapp.com).
+Find the beta [over here](https://better-notes.jakerunzer.com).
