@@ -30,7 +30,9 @@ defmodule BetterNotes.NoteControllerTest do
   test "shows chosen resource", %{conn: conn, project: project} do
     note = Repo.insert! Note.changeset(%Note{project_id: project.id}, @valid_attrs)
     conn = get conn, note_path(conn, :show, project, note)
-    assert json_response(conn, 200) == %{"id" => note.id,
+    res = json_response(conn, 200)
+
+    assert Map.delete(res, "inserted_at") == %{"id" => note.id,
       "project_id" => note.project_id,
       "text" => note.text,
       "html" => note.html}

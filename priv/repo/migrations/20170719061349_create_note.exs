@@ -7,7 +7,7 @@ defmodule BetterNotes.Repo.Migrations.CreateNote do
       add :html, :text
       add :project_id, references(:projects, on_delete: :delete_all)
 
-      timestamps()
+      timestamps(type: :utc_datetime)
     end
 
     create index(:notes, [:project_id])
